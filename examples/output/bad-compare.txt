@@ -1,0 +1,103 @@
+fraud-rule-backtest compare: examples/good/transactions.csv + examples/good/rules-current.json + examples/bad/rules-candidate.json
+transactions file: examples/good/transactions.csv (csv, 406 lines, 24,667 bytes)
+current rules file: examples/good/rules-current.json (json, 66 lines, 1,858 bytes)
+candidate rules file: examples/bad/rules-candidate.json (json, 56 lines, 1,560 bytes)
+transactions: 405 rows, 405 labelled (47 fraud, 358 not fraud)
+amounts: fraud 22,382.38, not fraud 26,810.67 (currencies: EUR)
+current rules: Current rule set (made up): 4 rules
+candidate rules: Candidate that loses fraud and adds false alarms (made up): 4 rules
+findings: 2 (2 error)
+
+Candidate rule results
+
+  rule  action  alerts  fraud  not fraud  precision  recall  fp rate  per 1,000  fraud amount  good amount  only rule
+  R001  hold        11      8          3      0.727   0.170    0.008       27.2      4,658.90     1,376.04  3
+  R002  hold        17     13          4      0.765   0.277    0.011       42.0      7,370.57     1,032.99  13
+  R003  flag        15      7          8      0.467   0.149    0.022       37.0         13.56        13.90  7
+  R006  flag        35      6         29      0.171   0.128    0.081       86.4      3,225.15     4,454.74  1
+
+  fraud = fraud cases caught (true positives), not fraud = good transactions alerted (false positives), per 1,000 = alerts for each thousand transactions, fraud amount = amount of the fraud caught, good amount = amount of the good transactions affected, only rule = fraud that no other rule catches.
+
+Current rule results
+
+  rule  action  alerts  fraud  not fraud  precision  recall  fp rate  per 1,000  fraud amount  good amount  only rule
+  R001  hold        11      8          3      0.727   0.170    0.008       27.2      4,658.90     1,376.04  8
+  R002  hold        17     13          4      0.765   0.277    0.011       42.0      7,370.57     1,032.99  9
+  R003  flag        15      7          8      0.467   0.149    0.022       37.0         13.56        13.90  7
+  R004  block        9      9          0      1.000   0.191    0.000       22.2     10,211.06         0.00  5
+
+Current set against candidate set
+
+  measure                          current  candidate  change
+  transactions with an alert            48         72  +24
+  fraud caught                          33         29  -4
+  false alarms                          15         43  +28
+  fraud missed by every rule            14         18  +4
+  precision                          0.688      0.403  -0.285
+  recall                             0.702      0.617  -0.085
+  alerts per 1,000 transactions      118.5      177.8  +59.3
+  fraud amount caught            18,086.55  12,330.95  -5,755.60
+  good amount affected            2,422.93   6,455.08  +4,032.15
+
+What moves between the two sets
+
+  movement                           transactions  amount
+  fraud the candidate loses                     5  6,043.52
+  fraud the candidate adds                      1  287.92
+  false alarms the candidate adds              28  4,032.15
+  false alarms the candidate clears             0  0.00
+
+Rules between the two sets
+
+  added: R006
+  removed: R004
+  changed: R001 (limits), R002 (limits), R003 (limits)
+  unchanged: 0
+
+Checks (30)
+
+  check   name                         level    kind     status   findings
+  FRB001  file-unreadable              error    file     pass     0
+  FRB002  field-invalid                error    file     pass     0
+  FRB003  field-unknown                warning  file     pass     0
+  FRB004  rule-duplicate-id            error    rules    pass     0
+  FRB005  rule-no-owner                warning  rules    pass     0
+  FRB006  rule-no-action               error    rules    pass     0
+  FRB007  range-reversed               error    rules    pass     0
+  FRB008  field-not-in-data            error    rules    pass     0
+  FRB009  operator-type-mismatch       error    rules    pass     0
+  FRB010  duplicate-condition          warning  rules    pass     0
+  FRB011  block-no-precision-floor     warning  rules    pass     0
+  FRB012  label-column-missing         error    data     pass     0
+  FRB013  label-single-valued          error    data     pass     0
+  FRB014  label-unrecognised           warning  data     pass     0
+  FRB015  amount-invalid               error    data     pass     0
+  FRB016  currency-mixed               warning  data     pass     0
+  FRB017  transaction-id-duplicate     error    data     pass     0
+  FRB018  timestamp-unreadable         warning  data     pass     0
+  FRB019  timestamp-in-future          warning  data     skipped  - (no --as-of time was given)
+  FRB020  too-few-fraud-cases          info     data     pass     0
+  FRB021  rule-never-fires             warning  results  pass     0
+  FRB022  rule-catches-no-fraud        warning  results  pass     0
+  FRB023  alert-rate-over-limit        error    results  pass     0
+  FRB024  precision-under-floor        error    results  pass     0
+  FRB025  rule-redundant               warning  results  pass     0
+  FRB026  block-low-precision          error    results  pass     0
+  FRB027  hold-queue-over-limit        error    results  skipped  - (the rules file sets no max_hold_per_thousand)
+  FRB028  rule-low-evidence            info     results  pass     0
+  FRB029  candidate-loses-fraud        error    compare  fail     1
+  FRB030  candidate-adds-false-alarms  error    compare  fail     1
+
+Findings (2)
+
+  ERROR    FRB029  examples/bad/rules-candidate.json:4
+           The candidate set loses 5 fraud cases that the current set catches (amount 6,043.52), above max_lost_fraud of 0.
+           fix: Look at the cases named, and restore the rule or the part of it that caught them.
+
+  ERROR    FRB030  examples/bad/rules-candidate.json:4
+           The candidate set adds 28 false alarms that the current set does not raise (amount 4,032.15), above max_new_false_alarms of 10.
+           fix: Tighten the new or changed rules, or raise the limit if you accept the added volume.
+
+This report reads the transactions file and the rules file and nothing else. It replays the rules on past transactions that carry a label. A result describes how the rules would have behaved on that file; it is not a forecast of how they will behave on future transactions, and it is not a statement that the labels are complete or right. A clean result means that none of the problems of its checks were found.
+
+RESULT: FAIL - 2 findings at or above error (2 error)

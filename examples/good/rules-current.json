@@ -1,0 +1,66 @@
+{
+  "name": "Current rule set (made up)",
+  "description": "The rules in use for the made-up shop in the examples.",
+  "currency_note": "All amounts are in one currency, EUR.",
+  "limits": {
+    "max_hold_per_thousand": 60,
+    "block_min_precision": 0.9,
+    "min_true_positives": 5,
+    "min_fraud_cases": 20
+  },
+  "rules": [
+    {
+      "id": "R001",
+      "name": "Large gift card order",
+      "owner": "Payments risk team",
+      "action": "hold",
+      "when": {
+        "all": [
+          { "field": "merchant_category", "op": "eq", "value": "gift_cards" },
+          { "field": "amount", "op": "gte", "value": 300 }
+        ]
+      },
+      "max_alert_rate": 40,
+      "min_precision": 0.6
+    },
+    {
+      "id": "R002",
+      "name": "Web payment from a watched country",
+      "owner": "Payments risk team",
+      "action": "hold",
+      "when": {
+        "all": [
+          { "field": "channel", "op": "eq", "value": "web" },
+          { "field": "country", "op": "in", "value": ["NG", "RU"] },
+          { "field": "amount", "op": "gte", "value": 100 }
+        ]
+      },
+      "max_alert_rate": 50,
+      "min_precision": 0.6
+    },
+    {
+      "id": "R003",
+      "name": "Very small payment in the app",
+      "owner": "Card testing desk",
+      "action": "flag",
+      "when": {
+        "all": [
+          { "field": "channel", "op": "eq", "value": "app" },
+          { "field": "amount", "op": "between", "value": [0.5, 3] }
+        ]
+      },
+      "max_alert_rate": 50,
+      "min_precision": 0.4
+    },
+    {
+      "id": "R004",
+      "name": "Very high amount",
+      "owner": "Fraud operations",
+      "action": "block",
+      "when": { "field": "amount", "op": "gte", "value": 900 },
+      "max_alert_rate": 30,
+      "min_precision": 0.9,
+      "note": "Blocks with no review, so the floor is the highest of the set."
+    }
+  ]
+}

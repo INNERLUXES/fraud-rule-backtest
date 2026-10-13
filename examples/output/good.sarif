@@ -1,0 +1,515 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "fraud-rule-backtest",
+          "version": "1.0.0",
+          "informationUri": "https://github.com/INNERLUXES/fraud-rule-backtest",
+          "rules": [
+            {
+              "id": "FRB001",
+              "name": "file-unreadable",
+              "shortDescription": {
+                "text": "a file cannot be followed by the reader (a syntax error in the JSON or the CSV, a header with a field written twice, a rules file with no rules, or a file past a limit); no other check ran on that file"
+              },
+              "help": {
+                "text": "Fix the line and column named; docs/rule-format.md and docs/usage.md describe the files. (file)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "file"
+              }
+            },
+            {
+              "id": "FRB002",
+              "name": "field-invalid",
+              "shortDescription": {
+                "text": "a value is not what the format says: an action that is not flag, hold or block, an operator the tool does not know, a condition with no field or value, an in list that is not a list, a limit out of range, a rule with no id or no condition, or a transaction row with the wrong number of cells"
+              },
+              "help": {
+                "text": "Write the value as docs/rule-format.md says. A rule with a part the tool cannot use is replayed as a rule that never fires, so fix it first. (file)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "file"
+              }
+            },
+            {
+              "id": "FRB003",
+              "name": "field-unknown",
+              "shortDescription": {
+                "text": "a key of the rules file, of a rule, of the limits or of a condition that the tool does not read, often a misspelt name such as max_alert_rat or onwer; what is under it is not used"
+              },
+              "help": {
+                "text": "Correct the name to a key of docs/rule-format.md, or take it out of the file. (file)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "file"
+              }
+            },
+            {
+              "id": "FRB004",
+              "name": "rule-duplicate-id",
+              "shortDescription": {
+                "text": "two rules with the same id (compared without case and without extra spaces)"
+              },
+              "help": {
+                "text": "Give each rule one id. If two entries are the same rule, merge them; if they differ, name the difference in the id. (rules)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "rules"
+              }
+            },
+            {
+              "id": "FRB005",
+              "name": "rule-no-owner",
+              "shortDescription": {
+                "text": "a rule with no owner"
+              },
+              "help": {
+                "text": "Write the person, role or team that answers for the rule in \"owner\". (rules)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "rules"
+              }
+            },
+            {
+              "id": "FRB006",
+              "name": "rule-no-action",
+              "shortDescription": {
+                "text": "a rule with no action: nothing says whether a match is flagged, held or blocked"
+              },
+              "help": {
+                "text": "Write the action in \"action\": flag, hold or block. (rules)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "rules"
+              }
+            },
+            {
+              "id": "FRB007",
+              "name": "range-reversed",
+              "shortDescription": {
+                "text": "a between condition whose low end is above its high end, so no value can be inside it"
+              },
+              "help": {
+                "text": "Swap the two values so the low end comes first. (rules)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "rules"
+              }
+            },
+            {
+              "id": "FRB008",
+              "name": "field-not-in-data",
+              "shortDescription": {
+                "text": "a condition that uses a field that is not a column of the transactions file (with the nearest column)"
+              },
+              "help": {
+                "text": "Correct the field name to a column of the transactions file, or add the column to the data. (rules)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "rules"
+              }
+            },
+            {
+              "id": "FRB009",
+              "name": "operator-type-mismatch",
+              "shortDescription": {
+                "text": "an operator that is not valid for the type of the field, or a value that does not fit the field: gt on text, contains on a number, a text where a number is needed (a column of digits is a number, the timestamp column is a time, every other column is text)"
+              },
+              "help": {
+                "text": "Use an operator that fits the field (docs/rule-format.md lists them for numbers, times and text), and write the value as a number or as text to match. (rules)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "rules"
+              }
+            },
+            {
+              "id": "FRB010",
+              "name": "duplicate-condition",
+              "shortDescription": {
+                "text": "the same condition written twice in one group, or two rules with the same condition (the parts of a group compared in any order)"
+              },
+              "help": {
+                "text": "Take out the repeated part, or merge the two rules and keep the stricter limits. (rules)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "rules"
+              }
+            },
+            {
+              "id": "FRB011",
+              "name": "block-no-precision-floor",
+              "shortDescription": {
+                "text": "a rule that blocks and has no min_precision of its own"
+              },
+              "help": {
+                "text": "Write the lowest precision the rule may have in \"min_precision\", so that a drop is found by this check. (rules)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "rules"
+              }
+            },
+            {
+              "id": "FRB012",
+              "name": "label-column-missing",
+              "shortDescription": {
+                "text": "the transactions file has no label column (is_fraud, fraud or label), so no rule can be judged"
+              },
+              "help": {
+                "text": "Add a column with the confirmed outcome of each transaction: 1 or 0, true or false, fraud or legit. (data)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "data"
+              }
+            },
+            {
+              "id": "FRB013",
+              "name": "label-single-valued",
+              "shortDescription": {
+                "text": "the labelled transactions are all fraud or all not fraud, so precision or recall cannot be worked out"
+              },
+              "help": {
+                "text": "Use a file that holds both: confirmed fraud and confirmed good transactions from the same period and the same source. (data)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "data"
+              }
+            },
+            {
+              "id": "FRB014",
+              "name": "label-unrecognised",
+              "shortDescription": {
+                "text": "rows whose label is empty or is a value the tool does not recognise (it reads 1, true, yes, y, t, fraud and confirmed as fraud, and 0, false, no, n, f, legit, legitimate, genuine and ok as not fraud); they are left out of every count"
+              },
+              "help": {
+                "text": "Write the label with one of the values the tool reads, or take the unlabelled rows out of the file. (data)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "data"
+              }
+            },
+            {
+              "id": "FRB015",
+              "name": "amount-invalid",
+              "shortDescription": {
+                "text": "a transaction whose amount is negative or is not a plain number (a currency sign, a thousands separator or text); the amount counts as zero in the sums"
+              },
+              "help": {
+                "text": "Write the amount as a plain decimal number, without a sign for the currency, and as a positive number (a refund is a different record). (data)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "data"
+              }
+            },
+            {
+              "id": "FRB016",
+              "name": "currency-mixed",
+              "shortDescription": {
+                "text": "the transactions hold more than one currency and the rules file has no currency_note that says how the amounts are made comparable"
+              },
+              "help": {
+                "text": "Write in \"currency_note\" of the rules file how the amounts were brought to one currency, or give the tool a file of one currency. (data)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "data"
+              }
+            },
+            {
+              "id": "FRB017",
+              "name": "transaction-id-duplicate",
+              "shortDescription": {
+                "text": "two transactions with the same id (compared as written)"
+              },
+              "help": {
+                "text": "Give each transaction one id; if a transaction appears twice, keep one row, so that it is counted once. (data)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "data"
+              }
+            },
+            {
+              "id": "FRB018",
+              "name": "timestamp-unreadable",
+              "shortDescription": {
+                "text": "a transaction whose timestamp is empty or is not a time the tool reads (seconds or milliseconds since the epoch, or an ISO 8601 text); a time-based rule is false on it"
+              },
+              "help": {
+                "text": "Write the timestamp as an ISO 8601 text such as the ones in docs/usage.md, or as seconds since the epoch. (data)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "data"
+              }
+            },
+            {
+              "id": "FRB019",
+              "name": "timestamp-in-future",
+              "shortDescription": {
+                "text": "a transaction dated after the time given with --as-of; the tool reads no clock, so the check runs only when the time is given"
+              },
+              "help": {
+                "text": "Check how the file was built: a time in the future often means a wrong unit (milliseconds read as seconds) or a wrong zone. (data)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "data"
+              }
+            },
+            {
+              "id": "FRB020",
+              "name": "too-few-fraud-cases",
+              "shortDescription": {
+                "text": "the file holds fewer fraud cases than the min_fraud_cases limit (default 20); recall and precision on so few cases move a lot with one case"
+              },
+              "help": {
+                "text": "Use a longer period or more sources, or read the results as a first look. (data)"
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "kind": "data"
+              }
+            },
+            {
+              "id": "FRB021",
+              "name": "rule-never-fires",
+              "shortDescription": {
+                "text": "a rule that fires on none of the labelled transactions"
+              },
+              "help": {
+                "text": "Check the condition and the data; if the rule is not needed, retire it, and if it guards a rare case, say so in \"note\". (results)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "results"
+              }
+            },
+            {
+              "id": "FRB022",
+              "name": "rule-catches-no-fraud",
+              "shortDescription": {
+                "text": "a rule that fires and catches none of the fraud cases in the file: every alert is a false alarm"
+              },
+              "help": {
+                "text": "Tighten or retire the rule; look at the fields it uses against the fraud cases it should have caught. (results)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "results"
+              }
+            },
+            {
+              "id": "FRB023",
+              "name": "alert-rate-over-limit",
+              "shortDescription": {
+                "text": "a rule that fires on more transactions for each thousand than its max_alert_rate"
+              },
+              "help": {
+                "text": "Tighten the condition, or raise max_alert_rate if the queue can take the volume. (results)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "results"
+              }
+            },
+            {
+              "id": "FRB024",
+              "name": "precision-under-floor",
+              "shortDescription": {
+                "text": "a rule whose precision (the share of its alerts that were fraud) is under its min_precision"
+              },
+              "help": {
+                "text": "Tighten the condition so more of the alerts are fraud, or lower min_precision if you accept the lower precision. (results)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "results"
+              }
+            },
+            {
+              "id": "FRB025",
+              "name": "rule-redundant",
+              "shortDescription": {
+                "text": "a rule that catches fraud and every case it catches is also caught by another rule of the set"
+              },
+              "help": {
+                "text": "Retire the rule or merge it into the one that already catches the same cases, unless it is there on purpose. (results)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "results"
+              }
+            },
+            {
+              "id": "FRB026",
+              "name": "block-low-precision",
+              "shortDescription": {
+                "text": "a rule that blocks and has a precision under block_min_precision (default 0.9)"
+              },
+              "help": {
+                "text": "Change the action to hold or flag, or tighten the condition until almost every block is fraud. (results)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "results"
+              }
+            },
+            {
+              "id": "FRB027",
+              "name": "hold-queue-over-limit",
+              "shortDescription": {
+                "text": "the transactions whose strongest action is hold are more, for each thousand, than max_hold_per_thousand of the rules file; the check runs only when the limit is set"
+              },
+              "help": {
+                "text": "Tighten the rules that hold, or give the review team more capacity and raise the limit. (results)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "results"
+              }
+            },
+            {
+              "id": "FRB028",
+              "name": "rule-low-evidence",
+              "shortDescription": {
+                "text": "a rule that fired but caught fewer fraud cases than the min_true_positives limit (default 5): its precision rests on a few cases (the count is in the message)"
+              },
+              "help": {
+                "text": "Read the precision of this rule as a first look, or replay a longer period. (results)"
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "kind": "results"
+              }
+            },
+            {
+              "id": "FRB029",
+              "name": "candidate-loses-fraud",
+              "shortDescription": {
+                "text": "fraud that the current set catches and the candidate set does not, more cases than max_lost_fraud (default 0)"
+              },
+              "help": {
+                "text": "Look at the cases named, and restore the rule or the part of it that caught them. (compare)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "compare"
+              }
+            },
+            {
+              "id": "FRB030",
+              "name": "candidate-adds-false-alarms",
+              "shortDescription": {
+                "text": "good transactions that the candidate set alerts on and the current set does not, more than max_new_false_alarms of the candidate rules file; the check runs only when the limit is set"
+              },
+              "help": {
+                "text": "Tighten the new or changed rules, or raise the limit if you accept the added volume. (compare)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "compare"
+              }
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "examples/good/transactions.csv"
+          }
+        },
+        {
+          "location": {
+            "uri": "examples/good/rules-current.json"
+          }
+        }
+      ],
+      "results": [],
+      "properties": {
+        "notice": "This report reads the transactions file and the rules file and nothing else. It replays the rules on past transactions that carry a label. A result describes how the rules would have behaved on that file; it is not a forecast of how they will behave on future transactions, and it is not a statement that the labels are complete or right. A clean result means that none of the problems of its checks were found.",
+        "result": "PASS - no finding at or above error",
+        "command": "backtest"
+      }
+    }
+  ]
+}

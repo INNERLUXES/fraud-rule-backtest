@@ -1,0 +1,56 @@
+{
+  "name": "Candidate that loses fraud and adds false alarms (made up)",
+  "currency_note": "All amounts are in one currency, EUR.",
+  "limits": { "max_new_false_alarms": 10, "max_lost_fraud": 0 },
+  "rules": [
+    {
+      "id": "R001",
+      "name": "Large gift card order",
+      "owner": "Payments risk team",
+      "action": "hold",
+      "when": {
+        "all": [
+          { "field": "merchant_category", "op": "eq", "value": "gift_cards" },
+          { "field": "amount", "op": "gte", "value": 300 }
+        ]
+      }
+    },
+    {
+      "id": "R002",
+      "name": "Web payment from a watched country",
+      "owner": "Payments risk team",
+      "action": "hold",
+      "when": {
+        "all": [
+          { "field": "channel", "op": "eq", "value": "web" },
+          { "field": "country", "op": "in", "value": ["NG", "RU"] },
+          { "field": "amount", "op": "gte", "value": 100 }
+        ]
+      }
+    },
+    {
+      "id": "R003",
+      "name": "Very small payment in the app",
+      "owner": "Card testing desk",
+      "action": "flag",
+      "when": {
+        "all": [
+          { "field": "channel", "op": "eq", "value": "app" },
+          { "field": "amount", "op": "between", "value": [0.5, 3] }
+        ]
+      }
+    },
+    {
+      "id": "R006",
+      "name": "Mid-size payment at a shop till",
+      "owner": "Fraud operations",
+      "action": "flag",
+      "when": {
+        "all": [
+          { "field": "channel", "op": "eq", "value": "pos" },
+          { "field": "amount", "op": "gte", "value": 100 }
+        ]
+      }
+    }
+  ]
+}

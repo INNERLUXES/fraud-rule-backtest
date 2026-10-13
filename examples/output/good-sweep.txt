@@ -1,0 +1,62 @@
+fraud-rule-backtest sweep: examples/good/transactions.csv
+transactions file: examples/good/transactions.csv (csv, 406 lines, 24,667 bytes)
+transactions: 405 rows, 405 labelled (47 fraud, 358 not fraud)
+amounts: fraud 22,382.38, not fraud 26,810.67 (currencies: EUR)
+findings: 0
+
+Threshold sweep on 405 scored transactions (47 fraud)
+
+  cut-off  alerts  fraud  not fraud  precision  recall  fp rate  per 1,000  fraud amount  good amount
+  0.1      248        47        201      0.190   1.000    0.561      612.3     22,382.38  14,258.49
+  0.2      149        47        102      0.315   1.000    0.285      367.9     22,382.38  7,112.15
+  0.3      92         47         45      0.511   1.000    0.126      227.2     22,382.38  2,837.04
+  0.4      50         42          8      0.840   0.894    0.022      123.5     19,783.97  450.03
+  0.5      37         37          0      1.000   0.787    0.000       91.4     18,276.62  0.00
+  0.6      29         29          0      1.000   0.617    0.000       71.6     15,020.80  0.00
+  0.7      20         20          0      1.000   0.426    0.000       49.4      9,726.44  0.00
+  0.8      9           9          0      1.000   0.191    0.000       22.2      5,502.43  0.00
+  0.9      4           4          0      1.000   0.085    0.000        9.9      1,409.54  0.00
+
+  An alert is a transaction whose score is at or above the cut-off.
+
+Checks (30)
+
+  check   name                         level    kind     status   findings
+  FRB001  file-unreadable              error    file     pass     0
+  FRB002  field-invalid                error    file     pass     0
+  FRB003  field-unknown                warning  file     pass     0
+  FRB004  rule-duplicate-id            error    rules    skipped  - (the sweep command takes no rules file)
+  FRB005  rule-no-owner                warning  rules    skipped  - (the sweep command takes no rules file)
+  FRB006  rule-no-action               error    rules    skipped  - (the sweep command takes no rules file)
+  FRB007  range-reversed               error    rules    skipped  - (the sweep command takes no rules file)
+  FRB008  field-not-in-data            error    rules    skipped  - (the sweep command takes no rules file)
+  FRB009  operator-type-mismatch       error    rules    skipped  - (the sweep command takes no rules file)
+  FRB010  duplicate-condition          warning  rules    skipped  - (the sweep command takes no rules file)
+  FRB011  block-no-precision-floor     warning  rules    skipped  - (the sweep command takes no rules file)
+  FRB012  label-column-missing         error    data     pass     0
+  FRB013  label-single-valued          error    data     pass     0
+  FRB014  label-unrecognised           warning  data     pass     0
+  FRB015  amount-invalid               error    data     pass     0
+  FRB016  currency-mixed               warning  data     pass     0
+  FRB017  transaction-id-duplicate     error    data     pass     0
+  FRB018  timestamp-unreadable         warning  data     pass     0
+  FRB019  timestamp-in-future          warning  data     skipped  - (no --as-of time was given)
+  FRB020  too-few-fraud-cases          info     data     pass     0
+  FRB021  rule-never-fires             warning  results  skipped  - (the sweep command takes no rules file)
+  FRB022  rule-catches-no-fraud        warning  results  skipped  - (the sweep command takes no rules file)
+  FRB023  alert-rate-over-limit        error    results  skipped  - (the sweep command takes no rules file)
+  FRB024  precision-under-floor        error    results  skipped  - (the sweep command takes no rules file)
+  FRB025  rule-redundant               warning  results  skipped  - (the sweep command takes no rules file)
+  FRB026  block-low-precision          error    results  skipped  - (the sweep command takes no rules file)
+  FRB027  hold-queue-over-limit        error    results  skipped  - (the sweep command takes no rules file)
+  FRB028  rule-low-evidence            info     results  skipped  - (the sweep command takes no rules file)
+  FRB029  candidate-loses-fraud        error    compare  skipped  - (the sweep command takes no rules file)
+  FRB030  candidate-adds-false-alarms  error    compare  skipped  - (the sweep command takes no rules file)
+
+Findings (0)
+
+  none
+
+This report reads the transactions file and the rules file and nothing else. It replays the rules on past transactions that carry a label. A result describes how the rules would have behaved on that file; it is not a forecast of how they will behave on future transactions, and it is not a statement that the labels are complete or right. A clean result means that none of the problems of its checks were found.
+
+RESULT: PASS - no finding at or above error

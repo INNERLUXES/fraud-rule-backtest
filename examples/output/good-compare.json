@@ -1,0 +1,934 @@
+{
+  "tool": "fraud-rule-backtest",
+  "version": "1.0.0",
+  "command": "compare",
+  "input": {
+    "transactions": {
+      "file": "examples/good/transactions.csv",
+      "format": "csv",
+      "bytes": 24667,
+      "lines": 406
+    },
+    "rules": null,
+    "current": {
+      "file": "examples/good/rules-current.json",
+      "format": "json",
+      "bytes": 1858,
+      "lines": 66
+    },
+    "candidate": {
+      "file": "examples/good/rules-candidate.json",
+      "format": "json",
+      "bytes": 2277,
+      "lines": 82
+    }
+  },
+  "evaluated": {
+    "transactions": true,
+    "rules": false,
+    "current": true,
+    "candidate": true
+  },
+  "summary": {
+    "transactions": {
+      "rows": 405,
+      "skippedRows": 0,
+      "labelled": 405,
+      "fraud": 47,
+      "notFraud": 358,
+      "unlabelled": 0,
+      "fraudAmount": 22382.379999999994,
+      "goodAmount": 26810.670000000002,
+      "currencies": [
+        "EUR"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "type": "text"
+        },
+        {
+          "name": "timestamp",
+          "type": "time"
+        },
+        {
+          "name": "amount",
+          "type": "number"
+        },
+        {
+          "name": "currency",
+          "type": "text"
+        },
+        {
+          "name": "customer_id",
+          "type": "text"
+        },
+        {
+          "name": "channel",
+          "type": "text"
+        },
+        {
+          "name": "country",
+          "type": "text"
+        },
+        {
+          "name": "device_id",
+          "type": "text"
+        },
+        {
+          "name": "merchant_category",
+          "type": "text"
+        },
+        {
+          "name": "score",
+          "type": "number"
+        },
+        {
+          "name": "is_fraud",
+          "type": "number"
+        }
+      ],
+      "roles": {
+        "id": "id",
+        "timestamp": "timestamp",
+        "amount": "amount",
+        "currency": "currency",
+        "label": "is_fraud",
+        "score": "score"
+      }
+    },
+    "rules": null,
+    "current": {
+      "name": "Current rule set (made up)",
+      "rules": 4,
+      "currencyNote": true,
+      "limits": {
+        "max_hold_per_thousand": 60,
+        "block_min_precision": 0.9,
+        "min_true_positives": 5,
+        "min_fraud_cases": 20
+      }
+    },
+    "candidate": {
+      "name": "Candidate rule set (made up)",
+      "rules": 5,
+      "currencyNote": true,
+      "limits": {
+        "max_hold_per_thousand": 80,
+        "block_min_precision": 0.9,
+        "min_true_positives": 5,
+        "min_fraud_cases": 20,
+        "max_new_false_alarms": 10,
+        "max_lost_fraud": 0
+      }
+    }
+  },
+  "results": {
+    "current": {
+      "rules": [
+        {
+          "id": "R001",
+          "name": "Large gift card order",
+          "owner": "Payments risk team",
+          "action": "hold",
+          "alerts": 11,
+          "truePositives": 8,
+          "falsePositives": 3,
+          "precision": 0.727273,
+          "recall": 0.170213,
+          "falsePositiveRate": 0.00838,
+          "alertsPerThousand": 27.160494,
+          "fraudAmountCaught": 4658.9,
+          "goodAmountAffected": 1376.04,
+          "uniqueTruePositives": 8,
+          "sharedTruePositives": 0,
+          "unevaluable": 0
+        },
+        {
+          "id": "R002",
+          "name": "Web payment from a watched country",
+          "owner": "Payments risk team",
+          "action": "hold",
+          "alerts": 17,
+          "truePositives": 13,
+          "falsePositives": 4,
+          "precision": 0.764706,
+          "recall": 0.276596,
+          "falsePositiveRate": 0.011173,
+          "alertsPerThousand": 41.975309,
+          "fraudAmountCaught": 7370.57,
+          "goodAmountAffected": 1032.99,
+          "uniqueTruePositives": 9,
+          "sharedTruePositives": 4,
+          "unevaluable": 0
+        },
+        {
+          "id": "R003",
+          "name": "Very small payment in the app",
+          "owner": "Card testing desk",
+          "action": "flag",
+          "alerts": 15,
+          "truePositives": 7,
+          "falsePositives": 8,
+          "precision": 0.466667,
+          "recall": 0.148936,
+          "falsePositiveRate": 0.022346,
+          "alertsPerThousand": 37.037037,
+          "fraudAmountCaught": 13.56,
+          "goodAmountAffected": 13.9,
+          "uniqueTruePositives": 7,
+          "sharedTruePositives": 0,
+          "unevaluable": 0
+        },
+        {
+          "id": "R004",
+          "name": "Very high amount",
+          "owner": "Fraud operations",
+          "action": "block",
+          "alerts": 9,
+          "truePositives": 9,
+          "falsePositives": 0,
+          "precision": 1,
+          "recall": 0.191489,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 22.222222,
+          "fraudAmountCaught": 10211.06,
+          "goodAmountAffected": 0,
+          "uniqueTruePositives": 5,
+          "sharedTruePositives": 4,
+          "unevaluable": 0
+        }
+      ],
+      "set": {
+        "transactions": 405,
+        "fraud": 47,
+        "notFraud": 358,
+        "alerted": 48,
+        "fraudCaught": 33,
+        "falseAlarms": 15,
+        "fraudMissed": 14,
+        "precision": 0.6875,
+        "recall": 0.702128,
+        "falsePositiveRate": 0.041899,
+        "alertsPerThousand": 118.518519,
+        "fraudCaughtByMoreThanOne": 4,
+        "fraudCaughtByOne": 29,
+        "fraudAmountTotal": 22382.38,
+        "goodAmountTotal": 26810.67,
+        "fraudAmountCaught": 18086.55,
+        "fraudAmountMissed": 4295.83,
+        "goodAmountAffected": 2422.93,
+        "byAction": [
+          {
+            "action": "flag",
+            "transactions": 15,
+            "fraud": 7,
+            "notFraud": 8,
+            "perThousand": 37.037037
+          },
+          {
+            "action": "hold",
+            "transactions": 24,
+            "fraud": 17,
+            "notFraud": 7,
+            "perThousand": 59.259259
+          },
+          {
+            "action": "block",
+            "transactions": 9,
+            "fraud": 9,
+            "notFraud": 0,
+            "perThousand": 22.222222
+          }
+        ]
+      }
+    },
+    "candidate": {
+      "rules": [
+        {
+          "id": "R001",
+          "name": "Large gift card order",
+          "owner": "Payments risk team",
+          "action": "hold",
+          "alerts": 14,
+          "truePositives": 9,
+          "falsePositives": 5,
+          "precision": 0.642857,
+          "recall": 0.191489,
+          "falsePositiveRate": 0.013966,
+          "alertsPerThousand": 34.567901,
+          "fraudAmountCaught": 4946.82,
+          "goodAmountAffected": 1884.16,
+          "uniqueTruePositives": 9,
+          "sharedTruePositives": 0,
+          "unevaluable": 0
+        },
+        {
+          "id": "R002",
+          "name": "Web payment from a watched country",
+          "owner": "Payments risk team",
+          "action": "hold",
+          "alerts": 20,
+          "truePositives": 14,
+          "falsePositives": 6,
+          "precision": 0.7,
+          "recall": 0.297872,
+          "falsePositiveRate": 0.01676,
+          "alertsPerThousand": 49.382716,
+          "fraudAmountCaught": 7467.98,
+          "goodAmountAffected": 1201.35,
+          "uniqueTruePositives": 10,
+          "sharedTruePositives": 4,
+          "unevaluable": 0
+        },
+        {
+          "id": "R003",
+          "name": "Very small payment in the app",
+          "owner": "Card testing desk",
+          "action": "flag",
+          "alerts": 15,
+          "truePositives": 7,
+          "falsePositives": 8,
+          "precision": 0.466667,
+          "recall": 0.148936,
+          "falsePositiveRate": 0.022346,
+          "alertsPerThousand": 37.037037,
+          "fraudAmountCaught": 13.56,
+          "goodAmountAffected": 13.9,
+          "uniqueTruePositives": 7,
+          "sharedTruePositives": 0,
+          "unevaluable": 0
+        },
+        {
+          "id": "R004",
+          "name": "Very high amount",
+          "owner": "Fraud operations",
+          "action": "block",
+          "alerts": 9,
+          "truePositives": 9,
+          "falsePositives": 0,
+          "precision": 1,
+          "recall": 0.191489,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 22.222222,
+          "fraudAmountCaught": 10211.06,
+          "goodAmountAffected": 0,
+          "uniqueTruePositives": 5,
+          "sharedTruePositives": 4,
+          "unevaluable": 0
+        },
+        {
+          "id": "R005",
+          "name": "Large app payment from Brazil",
+          "owner": "Payments risk team",
+          "action": "flag",
+          "alerts": 8,
+          "truePositives": 6,
+          "falsePositives": 2,
+          "precision": 0.75,
+          "recall": 0.12766,
+          "falsePositiveRate": 0.005587,
+          "alertsPerThousand": 19.753086,
+          "fraudAmountCaught": 3583.67,
+          "goodAmountAffected": 519.63,
+          "uniqueTruePositives": 6,
+          "sharedTruePositives": 0,
+          "unevaluable": 0
+        }
+      ],
+      "set": {
+        "transactions": 405,
+        "fraud": 47,
+        "notFraud": 358,
+        "alerted": 62,
+        "fraudCaught": 41,
+        "falseAlarms": 21,
+        "fraudMissed": 6,
+        "precision": 0.66129,
+        "recall": 0.87234,
+        "falsePositiveRate": 0.058659,
+        "alertsPerThousand": 153.08642,
+        "fraudCaughtByMoreThanOne": 4,
+        "fraudCaughtByOne": 37,
+        "fraudAmountTotal": 22382.38,
+        "goodAmountTotal": 26810.67,
+        "fraudAmountCaught": 22055.55,
+        "fraudAmountMissed": 326.83,
+        "goodAmountAffected": 3619.04,
+        "byAction": [
+          {
+            "action": "flag",
+            "transactions": 23,
+            "fraud": 13,
+            "notFraud": 10,
+            "perThousand": 56.790123
+          },
+          {
+            "action": "hold",
+            "transactions": 30,
+            "fraud": 19,
+            "notFraud": 11,
+            "perThousand": 74.074074
+          },
+          {
+            "action": "block",
+            "transactions": 9,
+            "fraud": 9,
+            "notFraud": 0,
+            "perThousand": 22.222222
+          }
+        ]
+      }
+    },
+    "comparison": {
+      "summary": {
+        "fraudLost": 0,
+        "fraudGained": 8,
+        "falseAlarmsAdded": 6,
+        "falseAlarmsCleared": 0,
+        "fraudAmountLost": 0,
+        "fraudAmountGained": 3969,
+        "goodAmountAdded": 1196.11,
+        "goodAmountCleared": 0,
+        "recallChange": 0.170213,
+        "precisionChange": -0.02621,
+        "alertsChange": 14,
+        "alertsPerThousandChange": 34.567901,
+        "netFraudChange": 8,
+        "netFalseAlarmChange": 6,
+        "fraudShareLost": 0
+      },
+      "rules": {
+        "added": [
+          "R005"
+        ],
+        "removed": [],
+        "changed": [
+          {
+            "id": "R001",
+            "what": [
+              "condition",
+              "limits"
+            ]
+          },
+          {
+            "id": "R002",
+            "what": [
+              "condition",
+              "limits"
+            ]
+          }
+        ],
+        "same": 2
+      }
+    }
+  },
+  "checks": [
+    {
+      "id": "FRB001",
+      "name": "file-unreadable",
+      "level": "error",
+      "kind": "file",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB002",
+      "name": "field-invalid",
+      "level": "error",
+      "kind": "file",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB003",
+      "name": "field-unknown",
+      "level": "warning",
+      "kind": "file",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB004",
+      "name": "rule-duplicate-id",
+      "level": "error",
+      "kind": "rules",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB005",
+      "name": "rule-no-owner",
+      "level": "warning",
+      "kind": "rules",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB006",
+      "name": "rule-no-action",
+      "level": "error",
+      "kind": "rules",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB007",
+      "name": "range-reversed",
+      "level": "error",
+      "kind": "rules",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB008",
+      "name": "field-not-in-data",
+      "level": "error",
+      "kind": "rules",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB009",
+      "name": "operator-type-mismatch",
+      "level": "error",
+      "kind": "rules",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB010",
+      "name": "duplicate-condition",
+      "level": "warning",
+      "kind": "rules",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB011",
+      "name": "block-no-precision-floor",
+      "level": "warning",
+      "kind": "rules",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB012",
+      "name": "label-column-missing",
+      "level": "error",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB013",
+      "name": "label-single-valued",
+      "level": "error",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB014",
+      "name": "label-unrecognised",
+      "level": "warning",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB015",
+      "name": "amount-invalid",
+      "level": "error",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB016",
+      "name": "currency-mixed",
+      "level": "warning",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB017",
+      "name": "transaction-id-duplicate",
+      "level": "error",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB018",
+      "name": "timestamp-unreadable",
+      "level": "warning",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB019",
+      "name": "timestamp-in-future",
+      "level": "warning",
+      "kind": "data",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "no --as-of time was given"
+    },
+    {
+      "id": "FRB020",
+      "name": "too-few-fraud-cases",
+      "level": "info",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB021",
+      "name": "rule-never-fires",
+      "level": "warning",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB022",
+      "name": "rule-catches-no-fraud",
+      "level": "warning",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB023",
+      "name": "alert-rate-over-limit",
+      "level": "error",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB024",
+      "name": "precision-under-floor",
+      "level": "error",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB025",
+      "name": "rule-redundant",
+      "level": "warning",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB026",
+      "name": "block-low-precision",
+      "level": "error",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB027",
+      "name": "hold-queue-over-limit",
+      "level": "error",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB028",
+      "name": "rule-low-evidence",
+      "level": "info",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB029",
+      "name": "candidate-loses-fraud",
+      "level": "error",
+      "kind": "compare",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB030",
+      "name": "candidate-adds-false-alarms",
+      "level": "error",
+      "kind": "compare",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    }
+  ],
+  "totals": {
+    "findings": 0,
+    "byLevel": {
+      "error": 0,
+      "warning": 0,
+      "info": 0
+    },
+    "hidden": 0
+  },
+  "rules": [
+    {
+      "id": "FRB001",
+      "name": "file-unreadable",
+      "level": "error",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "FRB002",
+      "name": "field-invalid",
+      "level": "error",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "FRB003",
+      "name": "field-unknown",
+      "level": "warning",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "FRB004",
+      "name": "rule-duplicate-id",
+      "level": "error",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB005",
+      "name": "rule-no-owner",
+      "level": "warning",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB006",
+      "name": "rule-no-action",
+      "level": "error",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB007",
+      "name": "range-reversed",
+      "level": "error",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB008",
+      "name": "field-not-in-data",
+      "level": "error",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB009",
+      "name": "operator-type-mismatch",
+      "level": "error",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB010",
+      "name": "duplicate-condition",
+      "level": "warning",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB011",
+      "name": "block-no-precision-floor",
+      "level": "warning",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB012",
+      "name": "label-column-missing",
+      "level": "error",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB013",
+      "name": "label-single-valued",
+      "level": "error",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB014",
+      "name": "label-unrecognised",
+      "level": "warning",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB015",
+      "name": "amount-invalid",
+      "level": "error",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB016",
+      "name": "currency-mixed",
+      "level": "warning",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB017",
+      "name": "transaction-id-duplicate",
+      "level": "error",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB018",
+      "name": "timestamp-unreadable",
+      "level": "warning",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB019",
+      "name": "timestamp-in-future",
+      "level": "warning",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB020",
+      "name": "too-few-fraud-cases",
+      "level": "info",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB021",
+      "name": "rule-never-fires",
+      "level": "warning",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB022",
+      "name": "rule-catches-no-fraud",
+      "level": "warning",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB023",
+      "name": "alert-rate-over-limit",
+      "level": "error",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB024",
+      "name": "precision-under-floor",
+      "level": "error",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB025",
+      "name": "rule-redundant",
+      "level": "warning",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB026",
+      "name": "block-low-precision",
+      "level": "error",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB027",
+      "name": "hold-queue-over-limit",
+      "level": "error",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB028",
+      "name": "rule-low-evidence",
+      "level": "info",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB029",
+      "name": "candidate-loses-fraud",
+      "level": "error",
+      "kind": "compare",
+      "findings": 0
+    },
+    {
+      "id": "FRB030",
+      "name": "candidate-adds-false-alarms",
+      "level": "error",
+      "kind": "compare",
+      "findings": 0
+    }
+  ],
+  "options": {
+    "minSeverity": "info",
+    "failOn": "error",
+    "disabled": [],
+    "asOf": null,
+    "thresholds": null
+  },
+  "findings": [],
+  "notes": [],
+  "notice": "This report reads the transactions file and the rules file and nothing else. It replays the rules on past transactions that carry a label. A result describes how the rules would have behaved on that file; it is not a forecast of how they will behave on future transactions, and it is not a statement that the labels are complete or right. A clean result means that none of the problems of its checks were found.",
+  "result": {
+    "pass": true,
+    "failOn": "error",
+    "text": "PASS - no finding at or above error"
+  }
+}

@@ -1,0 +1,720 @@
+{
+  "tool": "fraud-rule-backtest",
+  "version": "1.0.0",
+  "command": "sweep",
+  "input": {
+    "transactions": {
+      "file": "examples/good/transactions.csv",
+      "format": "csv",
+      "bytes": 24667,
+      "lines": 406
+    },
+    "rules": null,
+    "current": null,
+    "candidate": null
+  },
+  "evaluated": {
+    "transactions": true,
+    "rules": false,
+    "current": false,
+    "candidate": false
+  },
+  "summary": {
+    "transactions": {
+      "rows": 405,
+      "skippedRows": 0,
+      "labelled": 405,
+      "fraud": 47,
+      "notFraud": 358,
+      "unlabelled": 0,
+      "fraudAmount": 22382.379999999994,
+      "goodAmount": 26810.670000000002,
+      "currencies": [
+        "EUR"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "type": "text"
+        },
+        {
+          "name": "timestamp",
+          "type": "time"
+        },
+        {
+          "name": "amount",
+          "type": "number"
+        },
+        {
+          "name": "currency",
+          "type": "text"
+        },
+        {
+          "name": "customer_id",
+          "type": "text"
+        },
+        {
+          "name": "channel",
+          "type": "text"
+        },
+        {
+          "name": "country",
+          "type": "text"
+        },
+        {
+          "name": "device_id",
+          "type": "text"
+        },
+        {
+          "name": "merchant_category",
+          "type": "text"
+        },
+        {
+          "name": "score",
+          "type": "number"
+        },
+        {
+          "name": "is_fraud",
+          "type": "number"
+        }
+      ],
+      "roles": {
+        "id": "id",
+        "timestamp": "timestamp",
+        "amount": "amount",
+        "currency": "currency",
+        "label": "is_fraud",
+        "score": "score"
+      }
+    },
+    "rules": null,
+    "current": null,
+    "candidate": null
+  },
+  "results": {
+    "sweep": {
+      "transactions": 405,
+      "fraud": 47,
+      "notFraud": 358,
+      "leftOut": 0,
+      "points": [
+        {
+          "threshold": 0.1,
+          "alerts": 248,
+          "truePositives": 47,
+          "falsePositives": 201,
+          "precision": 0.189516,
+          "recall": 1,
+          "falsePositiveRate": 0.561453,
+          "alertsPerThousand": 612.345679,
+          "fraudAmountCaught": 22382.38,
+          "goodAmountAffected": 14258.49
+        },
+        {
+          "threshold": 0.2,
+          "alerts": 149,
+          "truePositives": 47,
+          "falsePositives": 102,
+          "precision": 0.315436,
+          "recall": 1,
+          "falsePositiveRate": 0.284916,
+          "alertsPerThousand": 367.901235,
+          "fraudAmountCaught": 22382.38,
+          "goodAmountAffected": 7112.15
+        },
+        {
+          "threshold": 0.3,
+          "alerts": 92,
+          "truePositives": 47,
+          "falsePositives": 45,
+          "precision": 0.51087,
+          "recall": 1,
+          "falsePositiveRate": 0.125698,
+          "alertsPerThousand": 227.160494,
+          "fraudAmountCaught": 22382.38,
+          "goodAmountAffected": 2837.04
+        },
+        {
+          "threshold": 0.4,
+          "alerts": 50,
+          "truePositives": 42,
+          "falsePositives": 8,
+          "precision": 0.84,
+          "recall": 0.893617,
+          "falsePositiveRate": 0.022346,
+          "alertsPerThousand": 123.45679,
+          "fraudAmountCaught": 19783.97,
+          "goodAmountAffected": 450.03
+        },
+        {
+          "threshold": 0.5,
+          "alerts": 37,
+          "truePositives": 37,
+          "falsePositives": 0,
+          "precision": 1,
+          "recall": 0.787234,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 91.358025,
+          "fraudAmountCaught": 18276.62,
+          "goodAmountAffected": 0
+        },
+        {
+          "threshold": 0.6,
+          "alerts": 29,
+          "truePositives": 29,
+          "falsePositives": 0,
+          "precision": 1,
+          "recall": 0.617021,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 71.604938,
+          "fraudAmountCaught": 15020.8,
+          "goodAmountAffected": 0
+        },
+        {
+          "threshold": 0.7,
+          "alerts": 20,
+          "truePositives": 20,
+          "falsePositives": 0,
+          "precision": 1,
+          "recall": 0.425532,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 49.382716,
+          "fraudAmountCaught": 9726.44,
+          "goodAmountAffected": 0
+        },
+        {
+          "threshold": 0.8,
+          "alerts": 9,
+          "truePositives": 9,
+          "falsePositives": 0,
+          "precision": 1,
+          "recall": 0.191489,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 22.222222,
+          "fraudAmountCaught": 5502.43,
+          "goodAmountAffected": 0
+        },
+        {
+          "threshold": 0.9,
+          "alerts": 4,
+          "truePositives": 4,
+          "falsePositives": 0,
+          "precision": 1,
+          "recall": 0.085106,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 9.876543,
+          "fraudAmountCaught": 1409.54,
+          "goodAmountAffected": 0
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "id": "FRB001",
+      "name": "file-unreadable",
+      "level": "error",
+      "kind": "file",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB002",
+      "name": "field-invalid",
+      "level": "error",
+      "kind": "file",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB003",
+      "name": "field-unknown",
+      "level": "warning",
+      "kind": "file",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB004",
+      "name": "rule-duplicate-id",
+      "level": "error",
+      "kind": "rules",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB005",
+      "name": "rule-no-owner",
+      "level": "warning",
+      "kind": "rules",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB006",
+      "name": "rule-no-action",
+      "level": "error",
+      "kind": "rules",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB007",
+      "name": "range-reversed",
+      "level": "error",
+      "kind": "rules",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB008",
+      "name": "field-not-in-data",
+      "level": "error",
+      "kind": "rules",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB009",
+      "name": "operator-type-mismatch",
+      "level": "error",
+      "kind": "rules",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB010",
+      "name": "duplicate-condition",
+      "level": "warning",
+      "kind": "rules",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB011",
+      "name": "block-no-precision-floor",
+      "level": "warning",
+      "kind": "rules",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB012",
+      "name": "label-column-missing",
+      "level": "error",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB013",
+      "name": "label-single-valued",
+      "level": "error",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB014",
+      "name": "label-unrecognised",
+      "level": "warning",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB015",
+      "name": "amount-invalid",
+      "level": "error",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB016",
+      "name": "currency-mixed",
+      "level": "warning",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB017",
+      "name": "transaction-id-duplicate",
+      "level": "error",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB018",
+      "name": "timestamp-unreadable",
+      "level": "warning",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB019",
+      "name": "timestamp-in-future",
+      "level": "warning",
+      "kind": "data",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "no --as-of time was given"
+    },
+    {
+      "id": "FRB020",
+      "name": "too-few-fraud-cases",
+      "level": "info",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB021",
+      "name": "rule-never-fires",
+      "level": "warning",
+      "kind": "results",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB022",
+      "name": "rule-catches-no-fraud",
+      "level": "warning",
+      "kind": "results",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB023",
+      "name": "alert-rate-over-limit",
+      "level": "error",
+      "kind": "results",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB024",
+      "name": "precision-under-floor",
+      "level": "error",
+      "kind": "results",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB025",
+      "name": "rule-redundant",
+      "level": "warning",
+      "kind": "results",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB026",
+      "name": "block-low-precision",
+      "level": "error",
+      "kind": "results",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB027",
+      "name": "hold-queue-over-limit",
+      "level": "error",
+      "kind": "results",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB028",
+      "name": "rule-low-evidence",
+      "level": "info",
+      "kind": "results",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB029",
+      "name": "candidate-loses-fraud",
+      "level": "error",
+      "kind": "compare",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    },
+    {
+      "id": "FRB030",
+      "name": "candidate-adds-false-alarms",
+      "level": "error",
+      "kind": "compare",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the sweep command takes no rules file"
+    }
+  ],
+  "totals": {
+    "findings": 0,
+    "byLevel": {
+      "error": 0,
+      "warning": 0,
+      "info": 0
+    },
+    "hidden": 0
+  },
+  "rules": [
+    {
+      "id": "FRB001",
+      "name": "file-unreadable",
+      "level": "error",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "FRB002",
+      "name": "field-invalid",
+      "level": "error",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "FRB003",
+      "name": "field-unknown",
+      "level": "warning",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "FRB004",
+      "name": "rule-duplicate-id",
+      "level": "error",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB005",
+      "name": "rule-no-owner",
+      "level": "warning",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB006",
+      "name": "rule-no-action",
+      "level": "error",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB007",
+      "name": "range-reversed",
+      "level": "error",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB008",
+      "name": "field-not-in-data",
+      "level": "error",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB009",
+      "name": "operator-type-mismatch",
+      "level": "error",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB010",
+      "name": "duplicate-condition",
+      "level": "warning",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB011",
+      "name": "block-no-precision-floor",
+      "level": "warning",
+      "kind": "rules",
+      "findings": 0
+    },
+    {
+      "id": "FRB012",
+      "name": "label-column-missing",
+      "level": "error",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB013",
+      "name": "label-single-valued",
+      "level": "error",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB014",
+      "name": "label-unrecognised",
+      "level": "warning",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB015",
+      "name": "amount-invalid",
+      "level": "error",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB016",
+      "name": "currency-mixed",
+      "level": "warning",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB017",
+      "name": "transaction-id-duplicate",
+      "level": "error",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB018",
+      "name": "timestamp-unreadable",
+      "level": "warning",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB019",
+      "name": "timestamp-in-future",
+      "level": "warning",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB020",
+      "name": "too-few-fraud-cases",
+      "level": "info",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB021",
+      "name": "rule-never-fires",
+      "level": "warning",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB022",
+      "name": "rule-catches-no-fraud",
+      "level": "warning",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB023",
+      "name": "alert-rate-over-limit",
+      "level": "error",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB024",
+      "name": "precision-under-floor",
+      "level": "error",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB025",
+      "name": "rule-redundant",
+      "level": "warning",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB026",
+      "name": "block-low-precision",
+      "level": "error",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB027",
+      "name": "hold-queue-over-limit",
+      "level": "error",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB028",
+      "name": "rule-low-evidence",
+      "level": "info",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB029",
+      "name": "candidate-loses-fraud",
+      "level": "error",
+      "kind": "compare",
+      "findings": 0
+    },
+    {
+      "id": "FRB030",
+      "name": "candidate-adds-false-alarms",
+      "level": "error",
+      "kind": "compare",
+      "findings": 0
+    }
+  ],
+  "options": {
+    "minSeverity": "info",
+    "failOn": "error",
+    "disabled": [],
+    "asOf": null,
+    "thresholds": null
+  },
+  "findings": [],
+  "notes": [],
+  "notice": "This report reads the transactions file and the rules file and nothing else. It replays the rules on past transactions that carry a label. A result describes how the rules would have behaved on that file; it is not a forecast of how they will behave on future transactions, and it is not a statement that the labels are complete or right. A clean result means that none of the problems of its checks were found.",
+  "result": {
+    "pass": true,
+    "failOn": "error",
+    "text": "PASS - no finding at or above error"
+  }
+}

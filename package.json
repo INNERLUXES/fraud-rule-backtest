@@ -1,0 +1,53 @@
+{
+  "name": "fraud-rule-backtest",
+  "version": "1.0.0",
+  "description": "Back-tests a set of fraud rules against a file of past transactions that carry a confirmed fraud label, before a rule goes live or changes, and reports how each rule and the whole rule set would have behaved: alerts, fraud caught, false alarms, precision, recall, false positive rate, alerts for each thousand transactions, the amount of fraud caught and the amount of good transactions affected, the overlap between rules and the fraud that no rule catches. Compares a current and a candidate rule set on the same data (shadow mode), sweeps cut-offs of a numeric score, and checks the rules and the data for rules that never fire, fire too often, are not precise enough or add nothing, missing owners and actions, fields and operators that do not fit the data, labels that are missing or one-sided, bad amounts, repeated ids and too few fraud cases. It replays a file; it does not predict how a rule will behave on future transactions, is not a fraud detection system and not an audit. Never connects to a payment system or a database, contacts nothing over the network, reads no clock, writes nothing. Text, markdown, JSON, SARIF and JUnit output, no dependencies.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "bin": {
+    "fraud-rule-backtest": "bin/fraud-rule-backtest.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "docs",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "test:coverage": "node --test --experimental-test-coverage \"test/*.test.js\"",
+    "check": "node tools/check.mjs",
+    "example": "node tools/example.mjs",
+    "make-examples": "node tools/make-examples.mjs"
+  },
+  "keywords": [
+    "fraud-detection",
+    "fraud-rules",
+    "backtesting",
+    "shadow-mode",
+    "precision-recall",
+    "false-positives",
+    "payments",
+    "risk",
+    "rule-engine",
+    "junit",
+    "sarif",
+    "cli",
+    "nodejs"
+  ],
+  "author": "INNERLUXES <info@innerluxes.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/INNERLUXES/fraud-rule-backtest.git"
+  },
+  "homepage": "https://innerluxes.dev/finance/fraud-detection"
+}

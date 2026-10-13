@@ -1,0 +1,123 @@
+fraud-rule-backtest backtest: examples/bad/transactions-small.csv + examples/good/rules-current.json
+transactions file: examples/bad/transactions-small.csv (csv, 71 lines, 4,364 bytes)
+rules file: examples/good/rules-current.json (json, 66 lines, 1,858 bytes)
+transactions: 70 rows, 70 labelled (3 fraud, 67 not fraud)
+amounts: fraud 78.82, not fraud 8,237.82 (currencies: EUR)
+rules: Current rule set (made up): 4 rules
+findings: 10 (5 error, 4 warning, 1 info)
+
+Rule results
+
+  rule  action  alerts  fraud  not fraud  precision  recall  fp rate  per 1,000  fraud amount  good amount  only rule
+  R001  hold         2      0          2      0.000   0.000    0.030       28.6          0.00     1,122.28  0
+  R002  hold         3      0          3      0.000   0.000    0.045       42.9          0.00     1,698.95  0
+  R003  flag         1      0          1      0.000   0.000    0.015       14.3          0.00         2.55  0
+  R004  block        2      0          2      0.000   0.000    0.030       28.6          0.00     2,287.14  0
+
+  fraud = fraud cases caught (true positives), not fraud = good transactions alerted (false positives), per 1,000 = alerts for each thousand transactions, fraud amount = amount of the fraud caught, good amount = amount of the good transactions affected, only rule = fraud that no other rule catches.
+
+The whole rule set
+
+  measure                             value
+  labelled transactions               70
+  fraud cases                         3
+  transactions with an alert          7
+  fraud caught                        0
+  false alarms                        7
+  fraud missed by every rule          3
+  precision                           0.000
+  recall                              0.000
+  false positive rate                 0.104
+  alerts per 1,000 transactions       100.0
+  fraud caught by more than one rule  0
+  fraud caught by one rule only       0
+  fraud amount caught                 0.00
+  fraud amount missed                 78.82
+  good amount affected                4,102.26
+
+Strongest action of each alerted transaction
+
+  strongest action  transactions  fraud  not fraud  per 1,000
+  flag              1                 0          1  14.3
+  hold              4                 0          4  57.1
+  block             2                 0          2  28.6
+
+Checks (30)
+
+  check   name                         level    kind     status   findings
+  FRB001  file-unreadable              error    file     pass     0
+  FRB002  field-invalid                error    file     pass     0
+  FRB003  field-unknown                warning  file     pass     0
+  FRB004  rule-duplicate-id            error    rules    pass     0
+  FRB005  rule-no-owner                warning  rules    pass     0
+  FRB006  rule-no-action               error    rules    pass     0
+  FRB007  range-reversed               error    rules    pass     0
+  FRB008  field-not-in-data            error    rules    pass     0
+  FRB009  operator-type-mismatch       error    rules    pass     0
+  FRB010  duplicate-condition          warning  rules    pass     0
+  FRB011  block-no-precision-floor     warning  rules    pass     0
+  FRB012  label-column-missing         error    data     pass     0
+  FRB013  label-single-valued          error    data     pass     0
+  FRB014  label-unrecognised           warning  data     pass     0
+  FRB015  amount-invalid               error    data     pass     0
+  FRB016  currency-mixed               warning  data     pass     0
+  FRB017  transaction-id-duplicate     error    data     pass     0
+  FRB018  timestamp-unreadable         warning  data     pass     0
+  FRB019  timestamp-in-future          warning  data     skipped  - (no --as-of time was given)
+  FRB020  too-few-fraud-cases          info     data     fail     1
+  FRB021  rule-never-fires             warning  results  pass     0
+  FRB022  rule-catches-no-fraud        warning  results  fail     4
+  FRB023  alert-rate-over-limit        error    results  pass     0
+  FRB024  precision-under-floor        error    results  fail     4
+  FRB025  rule-redundant               warning  results  pass     0
+  FRB026  block-low-precision          error    results  fail     1
+  FRB027  hold-queue-over-limit        error    results  pass     0
+  FRB028  rule-low-evidence            info     results  pass     0
+  FRB029  candidate-loses-fraud        error    compare  skipped  - (only the compare command runs it)
+  FRB030  candidate-adds-false-alarms  error    compare  skipped  - (only the compare command runs it)
+
+Findings (10)
+
+  ERROR    FRB024  examples/good/rules-current.json:24
+           The rule "R001" has a precision of 0.000 (0 of 2 alerts), under its min_precision of 0.6.
+           fix: Tighten the condition so more of the alerts are fraud, or lower min_precision if you accept the lower precision.
+
+  ERROR    FRB024  examples/good/rules-current.json:39
+           The rule "R002" has a precision of 0.000 (0 of 3 alerts), under its min_precision of 0.6.
+           fix: Tighten the condition so more of the alerts are fraud, or lower min_precision if you accept the lower precision.
+
+  ERROR    FRB024  examples/good/rules-current.json:53
+           The rule "R003" has a precision of 0.000 (0 of 1 alert), under its min_precision of 0.4.
+           fix: Tighten the condition so more of the alerts are fraud, or lower min_precision if you accept the lower precision.
+
+  ERROR    FRB026  examples/good/rules-current.json:55
+           The rule "R004" blocks and has a precision of 0.000 (0 of 2 alerts), under the block floor of 0.9.
+           fix: Change the action to hold or flag, or tighten the condition until almost every block is fraud.
+
+  ERROR    FRB024  examples/good/rules-current.json:62
+           The rule "R004" has a precision of 0.000 (0 of 2 alerts), under its min_precision of 0.9.
+           fix: Tighten the condition so more of the alerts are fraud, or lower min_precision if you accept the lower precision.
+
+  WARNING  FRB022  examples/good/rules-current.json:12
+           The rule "R001" fires on 2 transactions and catches none of the 3 fraud cases.
+           fix: Tighten or retire the rule; look at the fields it uses against the fraud cases it should have caught.
+
+  WARNING  FRB022  examples/good/rules-current.json:26
+           The rule "R002" fires on 3 transactions and catches none of the 3 fraud cases.
+           fix: Tighten or retire the rule; look at the fields it uses against the fraud cases it should have caught.
+
+  WARNING  FRB022  examples/good/rules-current.json:41
+           The rule "R003" fires on 1 transaction and catches none of the 3 fraud cases.
+           fix: Tighten or retire the rule; look at the fields it uses against the fraud cases it should have caught.
+
+  WARNING  FRB022  examples/good/rules-current.json:55
+           The rule "R004" fires on 2 transactions and catches none of the 3 fraud cases.
+           fix: Tighten or retire the rule; look at the fields it uses against the fraud cases it should have caught.
+
+  INFO     FRB020  examples/bad/transactions-small.csv:1
+           Only 3 of 70 labelled transactions are fraud (the limit is 20); a rate on so few cases moves a lot with one case.
+           fix: Use a longer period or more sources, or read the results as a first look.
+
+This report reads the transactions file and the rules file and nothing else. It replays the rules on past transactions that carry a label. A result describes how the rules would have behaved on that file; it is not a forecast of how they will behave on future transactions, and it is not a statement that the labels are complete or right. A clean result means that none of the problems of its checks were found.
+
+RESULT: FAIL - 5 findings at or above error (5 error, 4 warning, 1 info)

@@ -1,0 +1,53 @@
+fraud-rule-backtest backtest: examples/bad/transactions-no-label.csv + examples/good/rules-current.json
+transactions file: examples/bad/transactions-no-label.csv (csv, 41 lines, 2,427 bytes)
+rules file: examples/good/rules-current.json (json, 66 lines, 1,858 bytes)
+transactions: 40 rows, 0 labelled (0 fraud, 0 not fraud); 40 left out for want of a label
+amounts: fraud 0.00, not fraud 0.00 (currencies: EUR)
+rules: Current rule set (made up): 4 rules
+findings: 1 (1 error)
+
+Checks (30)
+
+  check   name                         level    kind     status         findings
+  FRB001  file-unreadable              error    file     pass           0
+  FRB002  field-invalid                error    file     pass           0
+  FRB003  field-unknown                warning  file     pass           0
+  FRB004  rule-duplicate-id            error    rules    pass           0
+  FRB005  rule-no-owner                warning  rules    pass           0
+  FRB006  rule-no-action               error    rules    pass           0
+  FRB007  range-reversed               error    rules    pass           0
+  FRB008  field-not-in-data            error    rules    pass           0
+  FRB009  operator-type-mismatch       error    rules    pass           0
+  FRB010  duplicate-condition          warning  rules    pass           0
+  FRB011  block-no-precision-floor     warning  rules    pass           0
+  FRB012  label-column-missing         error    data     fail           1
+  FRB013  label-single-valued          error    data     pass           0
+  FRB014  label-unrecognised           warning  data     pass           0
+  FRB015  amount-invalid               error    data     pass           0
+  FRB016  currency-mixed               warning  data     pass           0
+  FRB017  transaction-id-duplicate     error    data     pass           0
+  FRB018  timestamp-unreadable         warning  data     pass           0
+  FRB019  timestamp-in-future          warning  data     skipped        - (no --as-of time was given)
+  FRB020  too-few-fraud-cases          info     data     pass           0
+  FRB021  rule-never-fires             warning  results  not-evaluated  - (the labels cannot be used)
+  FRB022  rule-catches-no-fraud        warning  results  not-evaluated  - (the labels cannot be used)
+  FRB023  alert-rate-over-limit        error    results  not-evaluated  - (the labels cannot be used)
+  FRB024  precision-under-floor        error    results  not-evaluated  - (the labels cannot be used)
+  FRB025  rule-redundant               warning  results  not-evaluated  - (the labels cannot be used)
+  FRB026  block-low-precision          error    results  not-evaluated  - (the labels cannot be used)
+  FRB027  hold-queue-over-limit        error    results  not-evaluated  - (the labels cannot be used)
+  FRB028  rule-low-evidence            info     results  not-evaluated  - (the labels cannot be used)
+  FRB029  candidate-loses-fraud        error    compare  skipped        - (only the compare command runs it)
+  FRB030  candidate-adds-false-alarms  error    compare  skipped        - (only the compare command runs it)
+
+Findings (1)
+
+  ERROR    FRB012  examples/bad/transactions-no-label.csv:1
+           The transactions file has no label column; it needs one of is_fraud, fraud or label.
+           fix: Add a column with the confirmed outcome of each transaction: 1 or 0, true or false, fraud or legit.
+
+note: the rules were not replayed because the labels cannot be used (see FRB012 and FRB013)
+
+This report reads the transactions file and the rules file and nothing else. It replays the rules on past transactions that carry a label. A result describes how the rules would have behaved on that file; it is not a forecast of how they will behave on future transactions, and it is not a statement that the labels are complete or right. A clean result means that none of the problems of its checks were found.
+
+RESULT: FAIL - 1 finding at or above error (1 error)

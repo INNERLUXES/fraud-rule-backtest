@@ -1,0 +1,51 @@
+fraud-rule-backtest backtest: examples/good/transactions.csv + examples/bad/rules-syntax-error.json
+transactions file: examples/good/transactions.csv (csv, 406 lines, 24,667 bytes)
+rules file: examples/bad/rules-syntax-error.json (json, 11 lines, 225 bytes)
+transactions: 405 rows, 405 labelled (47 fraud, 358 not fraud)
+amounts: fraud 22,382.38, not fraud 26,810.67 (currencies: EUR)
+rules: not read: the file could not be followed
+findings: 1 (1 error)
+
+Checks (30)
+
+  check   name                         level    kind     status         findings
+  FRB001  file-unreadable              error    file     fail           1
+  FRB002  field-invalid                error    file     pass           0
+  FRB003  field-unknown                warning  file     pass           0
+  FRB004  rule-duplicate-id            error    rules    not-evaluated  - (the rules file could not be read)
+  FRB005  rule-no-owner                warning  rules    not-evaluated  - (the rules file could not be read)
+  FRB006  rule-no-action               error    rules    not-evaluated  - (the rules file could not be read)
+  FRB007  range-reversed               error    rules    not-evaluated  - (the rules file could not be read)
+  FRB008  field-not-in-data            error    rules    not-evaluated  - (the rules file could not be read)
+  FRB009  operator-type-mismatch       error    rules    not-evaluated  - (the rules file could not be read)
+  FRB010  duplicate-condition          warning  rules    not-evaluated  - (the rules file could not be read)
+  FRB011  block-no-precision-floor     warning  rules    not-evaluated  - (the rules file could not be read)
+  FRB012  label-column-missing         error    data     pass           0
+  FRB013  label-single-valued          error    data     pass           0
+  FRB014  label-unrecognised           warning  data     pass           0
+  FRB015  amount-invalid               error    data     pass           0
+  FRB016  currency-mixed               warning  data     pass           0
+  FRB017  transaction-id-duplicate     error    data     pass           0
+  FRB018  timestamp-unreadable         warning  data     pass           0
+  FRB019  timestamp-in-future          warning  data     skipped        - (no --as-of time was given)
+  FRB020  too-few-fraud-cases          info     data     pass           0
+  FRB021  rule-never-fires             warning  results  not-evaluated  - (the rules file could not be read)
+  FRB022  rule-catches-no-fraud        warning  results  not-evaluated  - (the rules file could not be read)
+  FRB023  alert-rate-over-limit        error    results  not-evaluated  - (the rules file could not be read)
+  FRB024  precision-under-floor        error    results  not-evaluated  - (the rules file could not be read)
+  FRB025  rule-redundant               warning  results  not-evaluated  - (the rules file could not be read)
+  FRB026  block-low-precision          error    results  not-evaluated  - (the rules file could not be read)
+  FRB027  hold-queue-over-limit        error    results  not-evaluated  - (the rules file could not be read)
+  FRB028  rule-low-evidence            info     results  not-evaluated  - (the rules file could not be read)
+  FRB029  candidate-loses-fraud        error    compare  skipped        - (only the compare command runs it)
+  FRB030  candidate-adds-false-alarms  error    compare  skipped        - (only the compare command runs it)
+
+Findings (1)
+
+  ERROR    FRB001  examples/bad/rules-syntax-error.json:8
+           The rules file cannot be read as JSON: a comma or a closing } was expected.
+           fix: Fix the line and column named; docs/rule-format.md and docs/usage.md describe the files.
+
+This report reads the transactions file and the rules file and nothing else. It replays the rules on past transactions that carry a label. A result describes how the rules would have behaved on that file; it is not a forecast of how they will behave on future transactions, and it is not a statement that the labels are complete or right. A clean result means that none of the problems of its checks were found.
+
+RESULT: FAIL - 1 finding at or above error (1 error)

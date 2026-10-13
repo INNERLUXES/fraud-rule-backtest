@@ -1,0 +1,82 @@
+{
+  "name": "Candidate rule set (made up)",
+  "description": "The current rules with two thresholds lowered and one rule added.",
+  "currency_note": "All amounts are in one currency, EUR.",
+  "limits": {
+    "max_hold_per_thousand": 80,
+    "block_min_precision": 0.9,
+    "min_true_positives": 5,
+    "min_fraud_cases": 20,
+    "max_new_false_alarms": 10,
+    "max_lost_fraud": 0
+  },
+  "rules": [
+    {
+      "id": "R001",
+      "name": "Large gift card order",
+      "owner": "Payments risk team",
+      "action": "hold",
+      "when": {
+        "all": [
+          { "field": "merchant_category", "op": "eq", "value": "gift_cards" },
+          { "field": "amount", "op": "gte", "value": 250 }
+        ]
+      },
+      "max_alert_rate": 50,
+      "min_precision": 0.6
+    },
+    {
+      "id": "R002",
+      "name": "Web payment from a watched country",
+      "owner": "Payments risk team",
+      "action": "hold",
+      "when": {
+        "all": [
+          { "field": "channel", "op": "eq", "value": "web" },
+          { "field": "country", "op": "in", "value": ["NG", "RU"] },
+          { "field": "amount", "op": "gte", "value": 80 }
+        ]
+      },
+      "max_alert_rate": 60,
+      "min_precision": 0.6
+    },
+    {
+      "id": "R003",
+      "name": "Very small payment in the app",
+      "owner": "Card testing desk",
+      "action": "flag",
+      "when": {
+        "all": [
+          { "field": "channel", "op": "eq", "value": "app" },
+          { "field": "amount", "op": "between", "value": [0.5, 3] }
+        ]
+      },
+      "max_alert_rate": 50,
+      "min_precision": 0.4
+    },
+    {
+      "id": "R004",
+      "name": "Very high amount",
+      "owner": "Fraud operations",
+      "action": "block",
+      "when": { "field": "amount", "op": "gte", "value": 900 },
+      "max_alert_rate": 30,
+      "min_precision": 0.9
+    },
+    {
+      "id": "R005",
+      "name": "Large app payment from Brazil",
+      "owner": "Payments risk team",
+      "action": "flag",
+      "when": {
+        "all": [
+          { "field": "channel", "op": "eq", "value": "app" },
+          { "field": "country", "op": "eq", "value": "BR" },
+          { "field": "amount", "op": "gte", "value": 200 }
+        ]
+      },
+      "max_alert_rate": 30,
+      "min_precision": 0.5
+    }
+  ]
+}

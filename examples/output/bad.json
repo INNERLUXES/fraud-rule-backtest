@@ -1,0 +1,1323 @@
+{
+  "tool": "fraud-rule-backtest",
+  "version": "1.0.0",
+  "command": "backtest",
+  "input": {
+    "transactions": {
+      "file": "examples/bad/transactions.csv",
+      "format": "csv",
+      "bytes": 24661,
+      "lines": 406
+    },
+    "rules": {
+      "file": "examples/bad/rules.json",
+      "format": "json",
+      "bytes": 3247,
+      "lines": 120
+    },
+    "current": null,
+    "candidate": null
+  },
+  "evaluated": {
+    "transactions": true,
+    "rules": true,
+    "current": false,
+    "candidate": false
+  },
+  "summary": {
+    "transactions": {
+      "rows": 405,
+      "skippedRows": 0,
+      "labelled": 403,
+      "fraud": 46,
+      "notFraud": 357,
+      "unlabelled": 2,
+      "fraudAmount": 22329.089999999993,
+      "goodAmount": 26240.79,
+      "currencies": [
+        "EUR",
+        "GBP"
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "type": "text"
+        },
+        {
+          "name": "timestamp",
+          "type": "time"
+        },
+        {
+          "name": "amount",
+          "type": "number"
+        },
+        {
+          "name": "currency",
+          "type": "text"
+        },
+        {
+          "name": "customer_id",
+          "type": "text"
+        },
+        {
+          "name": "channel",
+          "type": "text"
+        },
+        {
+          "name": "country",
+          "type": "text"
+        },
+        {
+          "name": "device_id",
+          "type": "text"
+        },
+        {
+          "name": "merchant_category",
+          "type": "text"
+        },
+        {
+          "name": "score",
+          "type": "number"
+        },
+        {
+          "name": "is_fraud",
+          "type": "text"
+        }
+      ],
+      "roles": {
+        "id": "id",
+        "timestamp": "timestamp",
+        "amount": "amount",
+        "currency": "currency",
+        "label": "is_fraud",
+        "score": "score"
+      }
+    },
+    "rules": {
+      "name": "Rule set with mistakes in the rules (made up)",
+      "rules": 12,
+      "currencyNote": false,
+      "limits": {}
+    },
+    "current": null,
+    "candidate": null
+  },
+  "results": {
+    "rules": {
+      "rules": [
+        {
+          "id": "R001",
+          "name": "Large gift card order",
+          "owner": "Payments risk team",
+          "action": "hold",
+          "alerts": 10,
+          "truePositives": 8,
+          "falsePositives": 2,
+          "precision": 0.8,
+          "recall": 0.173913,
+          "falsePositiveRate": 0.005602,
+          "alertsPerThousand": 24.813896,
+          "fraudAmountCaught": 4658.9,
+          "goodAmountAffected": 953.45,
+          "uniqueTruePositives": 0,
+          "sharedTruePositives": 8,
+          "unevaluable": 0
+        },
+        {
+          "id": "r001",
+          "name": "Gift cards, copied",
+          "owner": "Payments risk team",
+          "action": "hold",
+          "alerts": 10,
+          "truePositives": 8,
+          "falsePositives": 2,
+          "precision": 0.8,
+          "recall": 0.173913,
+          "falsePositiveRate": 0.005602,
+          "alertsPerThousand": 24.813896,
+          "fraudAmountCaught": 4658.9,
+          "goodAmountAffected": 953.45,
+          "uniqueTruePositives": 0,
+          "sharedTruePositives": 8,
+          "unevaluable": 0
+        },
+        {
+          "id": "R002",
+          "name": "Web payment from a watched country",
+          "owner": "",
+          "action": "hold",
+          "alerts": 20,
+          "truePositives": 14,
+          "falsePositives": 6,
+          "precision": 0.7,
+          "recall": 0.304348,
+          "falsePositiveRate": 0.016807,
+          "alertsPerThousand": 49.627792,
+          "fraudAmountCaught": 7467.98,
+          "goodAmountAffected": 1201.35,
+          "uniqueTruePositives": 0,
+          "sharedTruePositives": 14,
+          "unevaluable": 0
+        },
+        {
+          "id": "R003",
+          "name": "Very small payment in the app",
+          "owner": "Card testing desk",
+          "action": null,
+          "alerts": 0,
+          "truePositives": 0,
+          "falsePositives": 0,
+          "precision": null,
+          "recall": 0,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 0,
+          "fraudAmountCaught": 0,
+          "goodAmountAffected": 0,
+          "uniqueTruePositives": 0,
+          "sharedTruePositives": 0,
+          "unevaluable": 0
+        },
+        {
+          "id": "R004",
+          "name": "Very high amount",
+          "owner": "Fraud operations",
+          "action": "block",
+          "alerts": 0,
+          "truePositives": 0,
+          "falsePositives": 0,
+          "precision": null,
+          "recall": 0,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 0,
+          "fraudAmountCaught": 0,
+          "goodAmountAffected": 0,
+          "uniqueTruePositives": 0,
+          "sharedTruePositives": 0,
+          "unevaluable": 1
+        },
+        {
+          "id": "R005",
+          "name": "Country above a value",
+          "owner": "Fraud operations",
+          "action": "flag",
+          "alerts": 0,
+          "truePositives": 0,
+          "falsePositives": 0,
+          "precision": null,
+          "recall": 0,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 0,
+          "fraudAmountCaught": 0,
+          "goodAmountAffected": 0,
+          "uniqueTruePositives": 0,
+          "sharedTruePositives": 0,
+          "unevaluable": 1
+        },
+        {
+          "id": "R006",
+          "name": "Amount that contains text",
+          "owner": "Fraud operations",
+          "action": "flag",
+          "alerts": 0,
+          "truePositives": 0,
+          "falsePositives": 0,
+          "precision": null,
+          "recall": 0,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 0,
+          "fraudAmountCaught": 0,
+          "goodAmountAffected": 0,
+          "uniqueTruePositives": 0,
+          "sharedTruePositives": 0,
+          "unevaluable": 2
+        },
+        {
+          "id": "R007",
+          "name": "Wrong action word",
+          "owner": "Fraud operations",
+          "action": null,
+          "alerts": 140,
+          "truePositives": 21,
+          "falsePositives": 119,
+          "precision": 0.15,
+          "recall": 0.456522,
+          "falsePositiveRate": 0.333333,
+          "alertsPerThousand": 347.394541,
+          "fraudAmountCaught": 8914.99,
+          "goodAmountAffected": 9235.58,
+          "uniqueTruePositives": 5,
+          "sharedTruePositives": 16,
+          "unevaluable": 0
+        },
+        {
+          "id": "R008",
+          "name": "Operator the tool does not know",
+          "owner": "Fraud operations",
+          "action": "flag",
+          "alerts": 0,
+          "truePositives": 0,
+          "falsePositives": 0,
+          "precision": null,
+          "recall": 0,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 0,
+          "fraudAmountCaught": 0,
+          "goodAmountAffected": 0,
+          "uniqueTruePositives": 0,
+          "sharedTruePositives": 0,
+          "unevaluable": 1
+        },
+        {
+          "id": "R009",
+          "name": "List that is not a list",
+          "owner": "Fraud operations",
+          "action": "flag",
+          "alerts": 0,
+          "truePositives": 0,
+          "falsePositives": 0,
+          "precision": null,
+          "recall": 0,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 0,
+          "fraudAmountCaught": 0,
+          "goodAmountAffected": 0,
+          "uniqueTruePositives": 0,
+          "sharedTruePositives": 0,
+          "unevaluable": 1
+        },
+        {
+          "id": "R010",
+          "name": "Same condition as R002, written in another order",
+          "owner": "Payments risk team",
+          "action": "hold",
+          "alerts": 20,
+          "truePositives": 14,
+          "falsePositives": 6,
+          "precision": 0.7,
+          "recall": 0.304348,
+          "falsePositiveRate": 0.016807,
+          "alertsPerThousand": 49.627792,
+          "fraudAmountCaught": 7467.98,
+          "goodAmountAffected": 1201.35,
+          "uniqueTruePositives": 0,
+          "sharedTruePositives": 14,
+          "unevaluable": 0
+        },
+        {
+          "id": "(rule 12)",
+          "name": "No id and no condition",
+          "owner": "Fraud operations",
+          "action": "flag",
+          "alerts": 0,
+          "truePositives": 0,
+          "falsePositives": 0,
+          "precision": null,
+          "recall": 0,
+          "falsePositiveRate": 0,
+          "alertsPerThousand": 0,
+          "fraudAmountCaught": 0,
+          "goodAmountAffected": 0,
+          "uniqueTruePositives": 0,
+          "sharedTruePositives": 0,
+          "unevaluable": 1
+        }
+      ],
+      "set": {
+        "transactions": 403,
+        "fraud": 46,
+        "notFraud": 357,
+        "alerted": 147,
+        "fraudCaught": 27,
+        "falseAlarms": 120,
+        "fraudMissed": 19,
+        "precision": 0.183673,
+        "recall": 0.586957,
+        "falsePositiveRate": 0.336134,
+        "alertsPerThousand": 364.764268,
+        "fraudCaughtByMoreThanOne": 22,
+        "fraudCaughtByOne": 5,
+        "fraudAmountTotal": 22329.09,
+        "goodAmountTotal": 26240.79,
+        "fraudAmountCaught": 12400.42,
+        "fraudAmountMissed": 9928.67,
+        "goodAmountAffected": 9614.95,
+        "byAction": [
+          {
+            "action": "flag",
+            "transactions": 117,
+            "fraud": 5,
+            "notFraud": 112,
+            "perThousand": 290.322581
+          },
+          {
+            "action": "hold",
+            "transactions": 30,
+            "fraud": 22,
+            "notFraud": 8,
+            "perThousand": 74.441687
+          },
+          {
+            "action": "block",
+            "transactions": 0,
+            "fraud": 0,
+            "notFraud": 0,
+            "perThousand": 0
+          }
+        ]
+      }
+    }
+  },
+  "checks": [
+    {
+      "id": "FRB001",
+      "name": "file-unreadable",
+      "level": "error",
+      "kind": "file",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB002",
+      "name": "field-invalid",
+      "level": "error",
+      "kind": "file",
+      "status": "fail",
+      "findings": 6,
+      "detail": "6 findings"
+    },
+    {
+      "id": "FRB003",
+      "name": "field-unknown",
+      "level": "warning",
+      "kind": "file",
+      "status": "fail",
+      "findings": 3,
+      "detail": "3 findings"
+    },
+    {
+      "id": "FRB004",
+      "name": "rule-duplicate-id",
+      "level": "error",
+      "kind": "rules",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "FRB005",
+      "name": "rule-no-owner",
+      "level": "warning",
+      "kind": "rules",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "FRB006",
+      "name": "rule-no-action",
+      "level": "error",
+      "kind": "rules",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "FRB007",
+      "name": "range-reversed",
+      "level": "error",
+      "kind": "rules",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "FRB008",
+      "name": "field-not-in-data",
+      "level": "error",
+      "kind": "rules",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "FRB009",
+      "name": "operator-type-mismatch",
+      "level": "error",
+      "kind": "rules",
+      "status": "fail",
+      "findings": 3,
+      "detail": "3 findings"
+    },
+    {
+      "id": "FRB010",
+      "name": "duplicate-condition",
+      "level": "warning",
+      "kind": "rules",
+      "status": "fail",
+      "findings": 2,
+      "detail": "2 findings"
+    },
+    {
+      "id": "FRB011",
+      "name": "block-no-precision-floor",
+      "level": "warning",
+      "kind": "rules",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "FRB012",
+      "name": "label-column-missing",
+      "level": "error",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB013",
+      "name": "label-single-valued",
+      "level": "error",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB014",
+      "name": "label-unrecognised",
+      "level": "warning",
+      "kind": "data",
+      "status": "fail",
+      "findings": 2,
+      "detail": "2 findings"
+    },
+    {
+      "id": "FRB015",
+      "name": "amount-invalid",
+      "level": "error",
+      "kind": "data",
+      "status": "fail",
+      "findings": 3,
+      "detail": "3 findings"
+    },
+    {
+      "id": "FRB016",
+      "name": "currency-mixed",
+      "level": "warning",
+      "kind": "data",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "FRB017",
+      "name": "transaction-id-duplicate",
+      "level": "error",
+      "kind": "data",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "FRB018",
+      "name": "timestamp-unreadable",
+      "level": "warning",
+      "kind": "data",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "FRB019",
+      "name": "timestamp-in-future",
+      "level": "warning",
+      "kind": "data",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "FRB020",
+      "name": "too-few-fraud-cases",
+      "level": "info",
+      "kind": "data",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB021",
+      "name": "rule-never-fires",
+      "level": "warning",
+      "kind": "results",
+      "status": "fail",
+      "findings": 1,
+      "detail": "1 finding"
+    },
+    {
+      "id": "FRB022",
+      "name": "rule-catches-no-fraud",
+      "level": "warning",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB023",
+      "name": "alert-rate-over-limit",
+      "level": "error",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB024",
+      "name": "precision-under-floor",
+      "level": "error",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB025",
+      "name": "rule-redundant",
+      "level": "warning",
+      "kind": "results",
+      "status": "fail",
+      "findings": 4,
+      "detail": "4 findings"
+    },
+    {
+      "id": "FRB026",
+      "name": "block-low-precision",
+      "level": "error",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB027",
+      "name": "hold-queue-over-limit",
+      "level": "error",
+      "kind": "results",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "the rules file sets no max_hold_per_thousand"
+    },
+    {
+      "id": "FRB028",
+      "name": "rule-low-evidence",
+      "level": "info",
+      "kind": "results",
+      "status": "pass",
+      "findings": 0,
+      "detail": "no finding"
+    },
+    {
+      "id": "FRB029",
+      "name": "candidate-loses-fraud",
+      "level": "error",
+      "kind": "compare",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "only the compare command runs it"
+    },
+    {
+      "id": "FRB030",
+      "name": "candidate-adds-false-alarms",
+      "level": "error",
+      "kind": "compare",
+      "status": "skipped",
+      "findings": 0,
+      "detail": "only the compare command runs it"
+    }
+  ],
+  "totals": {
+    "findings": 34,
+    "byLevel": {
+      "error": 17,
+      "warning": 17,
+      "info": 0
+    },
+    "hidden": 0
+  },
+  "rules": [
+    {
+      "id": "FRB001",
+      "name": "file-unreadable",
+      "level": "error",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "FRB002",
+      "name": "field-invalid",
+      "level": "error",
+      "kind": "file",
+      "findings": 6
+    },
+    {
+      "id": "FRB003",
+      "name": "field-unknown",
+      "level": "warning",
+      "kind": "file",
+      "findings": 3
+    },
+    {
+      "id": "FRB004",
+      "name": "rule-duplicate-id",
+      "level": "error",
+      "kind": "rules",
+      "findings": 1
+    },
+    {
+      "id": "FRB005",
+      "name": "rule-no-owner",
+      "level": "warning",
+      "kind": "rules",
+      "findings": 1
+    },
+    {
+      "id": "FRB006",
+      "name": "rule-no-action",
+      "level": "error",
+      "kind": "rules",
+      "findings": 1
+    },
+    {
+      "id": "FRB007",
+      "name": "range-reversed",
+      "level": "error",
+      "kind": "rules",
+      "findings": 1
+    },
+    {
+      "id": "FRB008",
+      "name": "field-not-in-data",
+      "level": "error",
+      "kind": "rules",
+      "findings": 1
+    },
+    {
+      "id": "FRB009",
+      "name": "operator-type-mismatch",
+      "level": "error",
+      "kind": "rules",
+      "findings": 3
+    },
+    {
+      "id": "FRB010",
+      "name": "duplicate-condition",
+      "level": "warning",
+      "kind": "rules",
+      "findings": 2
+    },
+    {
+      "id": "FRB011",
+      "name": "block-no-precision-floor",
+      "level": "warning",
+      "kind": "rules",
+      "findings": 1
+    },
+    {
+      "id": "FRB012",
+      "name": "label-column-missing",
+      "level": "error",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB013",
+      "name": "label-single-valued",
+      "level": "error",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB014",
+      "name": "label-unrecognised",
+      "level": "warning",
+      "kind": "data",
+      "findings": 2
+    },
+    {
+      "id": "FRB015",
+      "name": "amount-invalid",
+      "level": "error",
+      "kind": "data",
+      "findings": 3
+    },
+    {
+      "id": "FRB016",
+      "name": "currency-mixed",
+      "level": "warning",
+      "kind": "data",
+      "findings": 1
+    },
+    {
+      "id": "FRB017",
+      "name": "transaction-id-duplicate",
+      "level": "error",
+      "kind": "data",
+      "findings": 1
+    },
+    {
+      "id": "FRB018",
+      "name": "timestamp-unreadable",
+      "level": "warning",
+      "kind": "data",
+      "findings": 1
+    },
+    {
+      "id": "FRB019",
+      "name": "timestamp-in-future",
+      "level": "warning",
+      "kind": "data",
+      "findings": 1
+    },
+    {
+      "id": "FRB020",
+      "name": "too-few-fraud-cases",
+      "level": "info",
+      "kind": "data",
+      "findings": 0
+    },
+    {
+      "id": "FRB021",
+      "name": "rule-never-fires",
+      "level": "warning",
+      "kind": "results",
+      "findings": 1
+    },
+    {
+      "id": "FRB022",
+      "name": "rule-catches-no-fraud",
+      "level": "warning",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB023",
+      "name": "alert-rate-over-limit",
+      "level": "error",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB024",
+      "name": "precision-under-floor",
+      "level": "error",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB025",
+      "name": "rule-redundant",
+      "level": "warning",
+      "kind": "results",
+      "findings": 4
+    },
+    {
+      "id": "FRB026",
+      "name": "block-low-precision",
+      "level": "error",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB027",
+      "name": "hold-queue-over-limit",
+      "level": "error",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB028",
+      "name": "rule-low-evidence",
+      "level": "info",
+      "kind": "results",
+      "findings": 0
+    },
+    {
+      "id": "FRB029",
+      "name": "candidate-loses-fraud",
+      "level": "error",
+      "kind": "compare",
+      "findings": 0
+    },
+    {
+      "id": "FRB030",
+      "name": "candidate-adds-false-alarms",
+      "level": "error",
+      "kind": "compare",
+      "findings": 0
+    }
+  ],
+  "options": {
+    "minSeverity": "info",
+    "failOn": "error",
+    "disabled": [],
+    "asOf": "1800000000",
+    "thresholds": null
+  },
+  "findings": [
+    {
+      "id": "FRB002",
+      "name": "field-invalid",
+      "severity": "error",
+      "message": "The rule \"R007\": the action \"blokc\" is not one of flag, hold, block (did you mean \"block\"?).",
+      "file": "examples/bad/rules.json",
+      "line": 84,
+      "column": 7,
+      "at": "examples/bad/rules.json:84",
+      "subject": null,
+      "fix": "Write the value as docs/rule-format.md says. A rule with a part the tool cannot use is replayed as a rule that never fires, so fix it first.",
+      "kind": "file"
+    },
+    {
+      "id": "FRB002",
+      "name": "field-invalid",
+      "severity": "error",
+      "message": "The rule \"R008\": the condition on \"amount\" has the operator \"gtee\", which the tool does not know (did you mean \"gte\"?) (eq, ne, gt, gte, lt, lte, in, not_in, contains, between).",
+      "file": "examples/bad/rules.json",
+      "line": 92,
+      "column": 15,
+      "at": "examples/bad/rules.json:92",
+      "subject": null,
+      "fix": "Write the value as docs/rule-format.md says. A rule with a part the tool cannot use is replayed as a rule that never fires, so fix it first.",
+      "kind": "file"
+    },
+    {
+      "id": "FRB002",
+      "name": "field-invalid",
+      "severity": "error",
+      "message": "The rule \"R009\": the operator in on \"country\" needs a list of 1 to 500 texts or numbers.",
+      "file": "examples/bad/rules.json",
+      "line": 99,
+      "column": 58,
+      "at": "examples/bad/rules.json:99",
+      "subject": null,
+      "fix": "Write the value as docs/rule-format.md says. A rule with a part the tool cannot use is replayed as a rule that never fires, so fix it first.",
+      "kind": "file"
+    },
+    {
+      "id": "FRB002",
+      "name": "field-invalid",
+      "severity": "error",
+      "message": "The rule \"R009\": max_alert_rate must be a number from 0 to 1000, but it is a number (5000).",
+      "file": "examples/bad/rules.json",
+      "line": 100,
+      "column": 7,
+      "at": "examples/bad/rules.json:100",
+      "subject": null,
+      "fix": "Write the value as docs/rule-format.md says. A rule with a part the tool cannot use is replayed as a rule that never fires, so fix it first.",
+      "kind": "file"
+    },
+    {
+      "id": "FRB002",
+      "name": "field-invalid",
+      "severity": "error",
+      "message": "Rule 12 has no \"id\" (text or a number).",
+      "file": "examples/bad/rules.json",
+      "line": 114,
+      "column": 5,
+      "at": "examples/bad/rules.json:114",
+      "subject": null,
+      "fix": "Write the value as docs/rule-format.md says. A rule with a part the tool cannot use is replayed as a rule that never fires, so fix it first.",
+      "kind": "file"
+    },
+    {
+      "id": "FRB002",
+      "name": "field-invalid",
+      "severity": "error",
+      "message": "The rule \"(rule 12)\" has no \"when\" condition.",
+      "file": "examples/bad/rules.json",
+      "line": 114,
+      "column": 5,
+      "at": "examples/bad/rules.json:114",
+      "subject": null,
+      "fix": "Write the value as docs/rule-format.md says. A rule with a part the tool cannot use is replayed as a rule that never fires, so fix it first.",
+      "kind": "file"
+    },
+    {
+      "id": "FRB004",
+      "name": "rule-duplicate-id",
+      "severity": "error",
+      "message": "The rule id \"r001\" is used by two rules: at line 6 and at line 20.",
+      "file": "examples/bad/rules.json",
+      "line": 20,
+      "column": 7,
+      "at": "examples/bad/rules.json:20",
+      "subject": "r001",
+      "fix": "Give each rule one id. If two entries are the same rule, merge them; if they differ, name the difference in the id.",
+      "kind": "rules"
+    },
+    {
+      "id": "FRB006",
+      "name": "rule-no-action",
+      "severity": "error",
+      "message": "The rule \"R003\" has no action; it needs flag, hold or block.",
+      "file": "examples/bad/rules.json",
+      "line": 42,
+      "column": 5,
+      "at": "examples/bad/rules.json:42",
+      "subject": "R003",
+      "fix": "Write the action in \"action\": flag, hold or block.",
+      "kind": "rules"
+    },
+    {
+      "id": "FRB007",
+      "name": "range-reversed",
+      "severity": "error",
+      "message": "The rule \"R003\" has a between range on \"amount\" with the low end 3 above the high end 0.5; no value can be inside it.",
+      "file": "examples/bad/rules.json",
+      "line": 49,
+      "column": 11,
+      "at": "examples/bad/rules.json:49",
+      "subject": "R003",
+      "fix": "Swap the two values so the low end comes first.",
+      "kind": "rules"
+    },
+    {
+      "id": "FRB008",
+      "name": "field-not-in-data",
+      "severity": "error",
+      "message": "The rule \"R004\" uses the field \"amout\", which is not a column of the transactions file; the nearest column is \"amount\".",
+      "file": "examples/bad/rules.json",
+      "line": 59,
+      "column": 15,
+      "at": "examples/bad/rules.json:59",
+      "subject": "R004",
+      "fix": "Correct the field name to a column of the transactions file, or add the column to the data.",
+      "kind": "rules"
+    },
+    {
+      "id": "FRB009",
+      "name": "operator-type-mismatch",
+      "severity": "error",
+      "message": "The rule \"R005\": the operator gt is not valid for the field \"country\", which holds text; it can use eq, ne, in, not_in, contains.",
+      "file": "examples/bad/rules.json",
+      "line": 66,
+      "column": 15,
+      "at": "examples/bad/rules.json:66",
+      "subject": "R005",
+      "fix": "Use an operator that fits the field (docs/rule-format.md lists them for numbers, times and text), and write the value as a number or as text to match.",
+      "kind": "rules"
+    },
+    {
+      "id": "FRB009",
+      "name": "operator-type-mismatch",
+      "severity": "error",
+      "message": "The rule \"R006\": the operator contains is not valid for the field \"amount\", which holds numbers; it can use eq, ne, gt, gte, lt, lte, in, not_in, between.",
+      "file": "examples/bad/rules.json",
+      "line": 75,
+      "column": 11,
+      "at": "examples/bad/rules.json:75",
+      "subject": "R006",
+      "fix": "Use an operator that fits the field (docs/rule-format.md lists them for numbers, times and text), and write the value as a number or as text to match.",
+      "kind": "rules"
+    },
+    {
+      "id": "FRB009",
+      "name": "operator-type-mismatch",
+      "severity": "error",
+      "message": "The rule \"R006\": the value \"high\" of \"amount\" is not a number, but the field holds numbers.",
+      "file": "examples/bad/rules.json",
+      "line": 76,
+      "column": 11,
+      "at": "examples/bad/rules.json:76",
+      "subject": "R006",
+      "fix": "Use an operator that fits the field (docs/rule-format.md lists them for numbers, times and text), and write the value as a number or as text to match.",
+      "kind": "rules"
+    },
+    {
+      "id": "FRB015",
+      "name": "amount-invalid",
+      "severity": "error",
+      "message": "The transaction \"T0011\" has the amount -25.00, which is negative; it counts as zero in the sums.",
+      "file": "examples/bad/transactions.csv",
+      "line": 12,
+      "column": 1,
+      "at": "examples/bad/transactions.csv:12",
+      "subject": null,
+      "fix": "Write the amount as a plain decimal number, without a sign for the currency, and as a positive number (a refund is a different record).",
+      "kind": "data"
+    },
+    {
+      "id": "FRB015",
+      "name": "amount-invalid",
+      "severity": "error",
+      "message": "The transaction \"T0021\" has the amount \"12 EUR\", which is not a plain number; it counts as zero in the sums.",
+      "file": "examples/bad/transactions.csv",
+      "line": 22,
+      "column": 1,
+      "at": "examples/bad/transactions.csv:22",
+      "subject": null,
+      "fix": "Write the amount as a plain decimal number, without a sign for the currency, and as a positive number (a refund is a different record).",
+      "kind": "data"
+    },
+    {
+      "id": "FRB017",
+      "name": "transaction-id-duplicate",
+      "severity": "error",
+      "message": "The transaction id \"T0070\" is used on line 71 and on line 72.",
+      "file": "examples/bad/transactions.csv",
+      "line": 72,
+      "column": 1,
+      "at": "examples/bad/transactions.csv:72",
+      "subject": null,
+      "fix": "Give each transaction one id; if a transaction appears twice, keep one row, so that it is counted once.",
+      "kind": "data"
+    },
+    {
+      "id": "FRB015",
+      "name": "amount-invalid",
+      "severity": "error",
+      "message": "The transaction \"T0091\" has no amount; it counts as zero in the sums.",
+      "file": "examples/bad/transactions.csv",
+      "line": 92,
+      "column": 1,
+      "at": "examples/bad/transactions.csv:92",
+      "subject": null,
+      "fix": "Write the amount as a plain decimal number, without a sign for the currency, and as a positive number (a refund is a different record).",
+      "kind": "data"
+    },
+    {
+      "id": "FRB003",
+      "name": "field-unknown",
+      "severity": "warning",
+      "message": "The rules file has the key \"limit\", which the tool does not read (did you mean \"limits\"?). What is under it is not checked.",
+      "file": "examples/bad/rules.json",
+      "line": 3,
+      "column": 3,
+      "at": "examples/bad/rules.json:3",
+      "subject": null,
+      "fix": "Correct the name to a key of docs/rule-format.md, or take it out of the file.",
+      "kind": "file"
+    },
+    {
+      "id": "FRB003",
+      "name": "field-unknown",
+      "severity": "warning",
+      "message": "Rule 1 has the key \"max_alert_rat\", which the tool does not read (did you mean \"max_alert_rate\"?). What is under it is not checked.",
+      "file": "examples/bad/rules.json",
+      "line": 17,
+      "column": 7,
+      "at": "examples/bad/rules.json:17",
+      "subject": null,
+      "fix": "Correct the name to a key of docs/rule-format.md, or take it out of the file.",
+      "kind": "file"
+    },
+    {
+      "id": "FRB003",
+      "name": "field-unknown",
+      "severity": "warning",
+      "message": "Rule 5 has the key \"onwer\", which the tool does not read (did you mean \"owner\"?). What is under it is not checked.",
+      "file": "examples/bad/rules.json",
+      "line": 56,
+      "column": 7,
+      "at": "examples/bad/rules.json:56",
+      "subject": null,
+      "fix": "Correct the name to a key of docs/rule-format.md, or take it out of the file.",
+      "kind": "file"
+    },
+    {
+      "id": "FRB010",
+      "name": "duplicate-condition",
+      "severity": "warning",
+      "message": "The rule \"R001\" repeats the condition 'amount gte 300' in one all group.",
+      "file": "examples/bad/rules.json",
+      "line": 14,
+      "column": 11,
+      "at": "examples/bad/rules.json:14",
+      "subject": "R001",
+      "fix": "Take out the repeated part, or merge the two rules and keep the stricter limits.",
+      "kind": "rules"
+    },
+    {
+      "id": "FRB005",
+      "name": "rule-no-owner",
+      "severity": "warning",
+      "message": "The rule \"R002\" has no owner.",
+      "file": "examples/bad/rules.json",
+      "line": 31,
+      "column": 5,
+      "at": "examples/bad/rules.json:31",
+      "subject": "R002",
+      "fix": "Write the person, role or team that answers for the rule in \"owner\".",
+      "kind": "rules"
+    },
+    {
+      "id": "FRB011",
+      "name": "block-no-precision-floor",
+      "severity": "warning",
+      "message": "The rule \"R004\" blocks and sets no min_precision.",
+      "file": "examples/bad/rules.json",
+      "line": 58,
+      "column": 7,
+      "at": "examples/bad/rules.json:58",
+      "subject": "R004",
+      "fix": "Write the lowest precision the rule may have in \"min_precision\", so that a drop is found by this check.",
+      "kind": "rules"
+    },
+    {
+      "id": "FRB010",
+      "name": "duplicate-condition",
+      "severity": "warning",
+      "message": "The rule \"R010\" has the same condition as the rule \"R002\" at line 31.",
+      "file": "examples/bad/rules.json",
+      "line": 107,
+      "column": 5,
+      "at": "examples/bad/rules.json:107",
+      "subject": "R010",
+      "fix": "Take out the repeated part, or merge the two rules and keep the stricter limits.",
+      "kind": "rules"
+    },
+    {
+      "id": "FRB016",
+      "name": "currency-mixed",
+      "severity": "warning",
+      "message": "The transactions hold 2 currencies (EUR and GBP) and the rules file has no currency_note that says how the amounts are made comparable.",
+      "file": "examples/bad/transactions.csv",
+      "line": 1,
+      "column": 1,
+      "at": "examples/bad/transactions.csv:1",
+      "subject": null,
+      "fix": "Write in \"currency_note\" of the rules file how the amounts were brought to one currency, or give the tool a file of one currency.",
+      "kind": "data"
+    },
+    {
+      "id": "FRB014",
+      "name": "label-unrecognised",
+      "severity": "warning",
+      "message": "The label \"maybe\" is not recognised on 1 transaction, the first \"T0031\"; they are left out of every count.",
+      "file": "examples/bad/transactions.csv",
+      "line": 32,
+      "column": 1,
+      "at": "examples/bad/transactions.csv:32",
+      "subject": null,
+      "fix": "Write the label with one of the values the tool reads, or take the unlabelled rows out of the file.",
+      "kind": "data"
+    },
+    {
+      "id": "FRB014",
+      "name": "label-unrecognised",
+      "severity": "warning",
+      "message": "1 transaction has no label, the first \"T0041\"; they are left out of every count.",
+      "file": "examples/bad/transactions.csv",
+      "line": 42,
+      "column": 1,
+      "at": "examples/bad/transactions.csv:42",
+      "subject": null,
+      "fix": "Write the label with one of the values the tool reads, or take the unlabelled rows out of the file.",
+      "kind": "data"
+    },
+    {
+      "id": "FRB018",
+      "name": "timestamp-unreadable",
+      "severity": "warning",
+      "message": "The transaction \"T0061\" has the timestamp \"soon\", which is not a time the tool reads.",
+      "file": "examples/bad/transactions.csv",
+      "line": 62,
+      "column": 1,
+      "at": "examples/bad/transactions.csv:62",
+      "subject": null,
+      "fix": "Write the timestamp as an ISO 8601 text such as the ones in docs/usage.md, or as seconds since the epoch.",
+      "kind": "data"
+    },
+    {
+      "id": "FRB019",
+      "name": "timestamp-in-future",
+      "severity": "warning",
+      "message": "The transaction \"T0081\" is dated after the --as-of time (timestamp \"4102444800\").",
+      "file": "examples/bad/transactions.csv",
+      "line": 82,
+      "column": 1,
+      "at": "examples/bad/transactions.csv:82",
+      "subject": null,
+      "fix": "Check how the file was built: a time in the future often means a wrong unit (milliseconds read as seconds) or a wrong zone.",
+      "kind": "data"
+    },
+    {
+      "id": "FRB025",
+      "name": "rule-redundant",
+      "severity": "warning",
+      "message": "The rule \"R001\" catches 8 fraud cases and every one is also caught by another rule.",
+      "file": "examples/bad/rules.json",
+      "line": 5,
+      "column": 5,
+      "at": "examples/bad/rules.json:5",
+      "subject": "R001",
+      "fix": "Retire the rule or merge it into the one that already catches the same cases, unless it is there on purpose.",
+      "kind": "results"
+    },
+    {
+      "id": "FRB025",
+      "name": "rule-redundant",
+      "severity": "warning",
+      "message": "The rule \"r001\" catches 8 fraud cases and every one is also caught by another rule.",
+      "file": "examples/bad/rules.json",
+      "line": 19,
+      "column": 5,
+      "at": "examples/bad/rules.json:19",
+      "subject": "r001",
+      "fix": "Retire the rule or merge it into the one that already catches the same cases, unless it is there on purpose.",
+      "kind": "results"
+    },
+    {
+      "id": "FRB025",
+      "name": "rule-redundant",
+      "severity": "warning",
+      "message": "The rule \"R002\" catches 14 fraud cases and every one is also caught by another rule.",
+      "file": "examples/bad/rules.json",
+      "line": 31,
+      "column": 5,
+      "at": "examples/bad/rules.json:31",
+      "subject": "R002",
+      "fix": "Retire the rule or merge it into the one that already catches the same cases, unless it is there on purpose.",
+      "kind": "results"
+    },
+    {
+      "id": "FRB021",
+      "name": "rule-never-fires",
+      "severity": "warning",
+      "message": "The rule \"R003\" never fires on the 403 labelled transactions.",
+      "file": "examples/bad/rules.json",
+      "line": 42,
+      "column": 5,
+      "at": "examples/bad/rules.json:42",
+      "subject": "R003",
+      "fix": "Check the condition and the data; if the rule is not needed, retire it, and if it guards a rare case, say so in \"note\".",
+      "kind": "results"
+    },
+    {
+      "id": "FRB025",
+      "name": "rule-redundant",
+      "severity": "warning",
+      "message": "The rule \"R010\" catches 14 fraud cases and every one is also caught by another rule.",
+      "file": "examples/bad/rules.json",
+      "line": 102,
+      "column": 5,
+      "at": "examples/bad/rules.json:102",
+      "subject": "R010",
+      "fix": "Retire the rule or merge it into the one that already catches the same cases, unless it is there on purpose.",
+      "kind": "results"
+    }
+  ],
+  "notes": [
+    "6 rules of the rules file could not be fully evaluated and are replayed as rules that never fire: R004, R005, R006, R008, R009 and more"
+  ],
+  "notice": "This report reads the transactions file and the rules file and nothing else. It replays the rules on past transactions that carry a label. A result describes how the rules would have behaved on that file; it is not a forecast of how they will behave on future transactions, and it is not a statement that the labels are complete or right. A clean result means that none of the problems of its checks were found.",
+  "result": {
+    "pass": false,
+    "failOn": "error",
+    "text": "FAIL - 17 findings at or above error (17 error, 17 warning)"
+  }
+}

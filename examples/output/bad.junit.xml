@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="fraud-rule-backtest" tests="30" failures="18" errors="0" time="0">
+  <testsuite name="fraud-rules" tests="30" failures="18" errors="0" skipped="3" time="0">
+    <testcase classname="fraud-rules" name="FRB001 file-unreadable" time="0"/>
+    <testcase classname="fraud-rules" name="FRB002 field-invalid" time="0">
+      <failure type="FRB002" message="6 findings">examples/bad/rules.json:84: The rule &quot;R007&quot;: the action &quot;blokc&quot; is not one of flag, hold, block (did you mean &quot;block&quot;?).
+examples/bad/rules.json:92: The rule &quot;R008&quot;: the condition on &quot;amount&quot; has the operator &quot;gtee&quot;, which the tool does not know (did you mean &quot;gte&quot;?) (eq, ne, gt, gte, lt, lte, in, not_in, contains, between).
+examples/bad/rules.json:99: The rule &quot;R009&quot;: the operator in on &quot;country&quot; needs a list of 1 to 500 texts or numbers.
+examples/bad/rules.json:100: The rule &quot;R009&quot;: max_alert_rate must be a number from 0 to 1000, but it is a number (5000).
+examples/bad/rules.json:114: Rule 12 has no &quot;id&quot; (text or a number).
+examples/bad/rules.json:114: The rule &quot;(rule 12)&quot; has no &quot;when&quot; condition.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB003 field-unknown" time="0">
+      <failure type="FRB003" message="3 findings">examples/bad/rules.json:3: The rules file has the key &quot;limit&quot;, which the tool does not read (did you mean &quot;limits&quot;?). What is under it is not checked.
+examples/bad/rules.json:17: Rule 1 has the key &quot;max_alert_rat&quot;, which the tool does not read (did you mean &quot;max_alert_rate&quot;?). What is under it is not checked.
+examples/bad/rules.json:56: Rule 5 has the key &quot;onwer&quot;, which the tool does not read (did you mean &quot;owner&quot;?). What is under it is not checked.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB004 rule-duplicate-id" time="0">
+      <failure type="FRB004" message="1 finding">examples/bad/rules.json:20: The rule id &quot;r001&quot; is used by two rules: at line 6 and at line 20.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB005 rule-no-owner" time="0">
+      <failure type="FRB005" message="1 finding">examples/bad/rules.json:31: The rule &quot;R002&quot; has no owner.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB006 rule-no-action" time="0">
+      <failure type="FRB006" message="1 finding">examples/bad/rules.json:42: The rule &quot;R003&quot; has no action; it needs flag, hold or block.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB007 range-reversed" time="0">
+      <failure type="FRB007" message="1 finding">examples/bad/rules.json:49: The rule &quot;R003&quot; has a between range on &quot;amount&quot; with the low end 3 above the high end 0.5; no value can be inside it.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB008 field-not-in-data" time="0">
+      <failure type="FRB008" message="1 finding">examples/bad/rules.json:59: The rule &quot;R004&quot; uses the field &quot;amout&quot;, which is not a column of the transactions file; the nearest column is &quot;amount&quot;.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB009 operator-type-mismatch" time="0">
+      <failure type="FRB009" message="3 findings">examples/bad/rules.json:66: The rule &quot;R005&quot;: the operator gt is not valid for the field &quot;country&quot;, which holds text; it can use eq, ne, in, not_in, contains.
+examples/bad/rules.json:75: The rule &quot;R006&quot;: the operator contains is not valid for the field &quot;amount&quot;, which holds numbers; it can use eq, ne, gt, gte, lt, lte, in, not_in, between.
+examples/bad/rules.json:76: The rule &quot;R006&quot;: the value &quot;high&quot; of &quot;amount&quot; is not a number, but the field holds numbers.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB010 duplicate-condition" time="0">
+      <failure type="FRB010" message="2 findings">examples/bad/rules.json:14: The rule &quot;R001&quot; repeats the condition &apos;amount gte 300&apos; in one all group.
+examples/bad/rules.json:107: The rule &quot;R010&quot; has the same condition as the rule &quot;R002&quot; at line 31.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB011 block-no-precision-floor" time="0">
+      <failure type="FRB011" message="1 finding">examples/bad/rules.json:58: The rule &quot;R004&quot; blocks and sets no min_precision.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB012 label-column-missing" time="0"/>
+    <testcase classname="fraud-rules" name="FRB013 label-single-valued" time="0"/>
+    <testcase classname="fraud-rules" name="FRB014 label-unrecognised" time="0">
+      <failure type="FRB014" message="2 findings">examples/bad/transactions.csv:32: The label &quot;maybe&quot; is not recognised on 1 transaction, the first &quot;T0031&quot;; they are left out of every count.
+examples/bad/transactions.csv:42: 1 transaction has no label, the first &quot;T0041&quot;; they are left out of every count.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB015 amount-invalid" time="0">
+      <failure type="FRB015" message="3 findings">examples/bad/transactions.csv:12: The transaction &quot;T0011&quot; has the amount -25.00, which is negative; it counts as zero in the sums.
+examples/bad/transactions.csv:22: The transaction &quot;T0021&quot; has the amount &quot;12 EUR&quot;, which is not a plain number; it counts as zero in the sums.
+examples/bad/transactions.csv:92: The transaction &quot;T0091&quot; has no amount; it counts as zero in the sums.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB016 currency-mixed" time="0">
+      <failure type="FRB016" message="1 finding">examples/bad/transactions.csv:1: The transactions hold 2 currencies (EUR and GBP) and the rules file has no currency_note that says how the amounts are made comparable.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB017 transaction-id-duplicate" time="0">
+      <failure type="FRB017" message="1 finding">examples/bad/transactions.csv:72: The transaction id &quot;T0070&quot; is used on line 71 and on line 72.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB018 timestamp-unreadable" time="0">
+      <failure type="FRB018" message="1 finding">examples/bad/transactions.csv:62: The transaction &quot;T0061&quot; has the timestamp &quot;soon&quot;, which is not a time the tool reads.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB019 timestamp-in-future" time="0">
+      <failure type="FRB019" message="1 finding">examples/bad/transactions.csv:82: The transaction &quot;T0081&quot; is dated after the --as-of time (timestamp &quot;4102444800&quot;).</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB020 too-few-fraud-cases" time="0"/>
+    <testcase classname="fraud-rules" name="FRB021 rule-never-fires" time="0">
+      <failure type="FRB021" message="1 finding">examples/bad/rules.json:42: The rule &quot;R003&quot; never fires on the 403 labelled transactions.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB022 rule-catches-no-fraud" time="0"/>
+    <testcase classname="fraud-rules" name="FRB023 alert-rate-over-limit" time="0"/>
+    <testcase classname="fraud-rules" name="FRB024 precision-under-floor" time="0"/>
+    <testcase classname="fraud-rules" name="FRB025 rule-redundant" time="0">
+      <failure type="FRB025" message="4 findings">examples/bad/rules.json:5: The rule &quot;R001&quot; catches 8 fraud cases and every one is also caught by another rule.
+examples/bad/rules.json:19: The rule &quot;r001&quot; catches 8 fraud cases and every one is also caught by another rule.
+examples/bad/rules.json:31: The rule &quot;R002&quot; catches 14 fraud cases and every one is also caught by another rule.
+examples/bad/rules.json:102: The rule &quot;R010&quot; catches 14 fraud cases and every one is also caught by another rule.</failure>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB026 block-low-precision" time="0"/>
+    <testcase classname="fraud-rules" name="FRB027 hold-queue-over-limit" time="0">
+      <skipped message="the rules file sets no max_hold_per_thousand"/>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB028 rule-low-evidence" time="0"/>
+    <testcase classname="fraud-rules" name="FRB029 candidate-loses-fraud" time="0">
+      <skipped message="only the compare command runs it"/>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB030 candidate-adds-false-alarms" time="0">
+      <skipped message="only the compare command runs it"/>
+    </testcase>
+  </testsuite>
+</testsuites>

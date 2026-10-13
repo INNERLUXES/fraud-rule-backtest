@@ -1,0 +1,11 @@
+{
+  "name": "Rules that cannot be read (made up)",
+  "rules": [
+    {
+      "id": "R001",
+      "owner": "Payments risk team",
+      "action": "flag"
+      "when": { "field": "amount", "op": "gte", "value": 300 }
+    }
+  ]
+}

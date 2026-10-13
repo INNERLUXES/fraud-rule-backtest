@@ -1,0 +1,120 @@
+{
+  "name": "Rule set with mistakes in the rules (made up)",
+  "limit": { "max_hold_per_thousand": 60 },
+  "rules": [
+    {
+      "id": "R001",
+      "name": "Large gift card order",
+      "owner": "Payments risk team",
+      "action": "hold",
+      "when": {
+        "all": [
+          { "field": "merchant_category", "op": "eq", "value": "gift_cards" },
+          { "field": "amount", "op": "gte", "value": 300 },
+          { "field": "amount", "op": "gte", "value": 300 }
+        ]
+      },
+      "max_alert_rat": 40
+    },
+    {
+      "id": "r001",
+      "name": "Gift cards, copied",
+      "owner": "Payments risk team",
+      "action": "hold",
+      "when": {
+        "all": [
+          { "field": "amount", "op": "gte", "value": 300 },
+          { "field": "merchant_category", "op": "eq", "value": "gift_cards" }
+        ]
+      }
+    },
+    {
+      "id": "R002",
+      "name": "Web payment from a watched country",
+      "action": "hold",
+      "when": {
+        "all": [
+          { "field": "channel", "op": "eq", "value": "web" },
+          { "field": "country", "op": "in", "value": ["NG", "RU"] }
+        ]
+      }
+    },
+    {
+      "id": "R003",
+      "name": "Very small payment in the app",
+      "owner": "Card testing desk",
+      "when": {
+        "all": [
+          { "field": "channel", "op": "eq", "value": "app" },
+          { "field": "amount", "op": "between", "value": [3, 0.5] }
+        ]
+      }
+    },
+    {
+      "id": "R004",
+      "name": "Very high amount",
+      "onwer": "Fraud operations",
+      "owner": "Fraud operations",
+      "action": "block",
+      "when": { "field": "amout", "op": "gte", "value": 900 }
+    },
+    {
+      "id": "R005",
+      "name": "Country above a value",
+      "owner": "Fraud operations",
+      "action": "flag",
+      "when": { "field": "country", "op": "gt", "value": "DE" }
+    },
+    {
+      "id": "R006",
+      "name": "Amount that contains text",
+      "owner": "Fraud operations",
+      "action": "flag",
+      "when": {
+        "any": [
+          { "field": "amount", "op": "contains", "value": "9" },
+          { "field": "amount", "op": "gte", "value": "high" }
+        ]
+      }
+    },
+    {
+      "id": "R007",
+      "name": "Wrong action word",
+      "owner": "Fraud operations",
+      "action": "blokc",
+      "when": { "field": "channel", "op": "eq", "value": "web" }
+    },
+    {
+      "id": "R008",
+      "name": "Operator the tool does not know",
+      "owner": "Fraud operations",
+      "action": "flag",
+      "when": { "field": "amount", "op": "gtee", "value": 100 }
+    },
+    {
+      "id": "R009",
+      "name": "List that is not a list",
+      "owner": "Fraud operations",
+      "action": "flag",
+      "when": { "field": "country", "op": "in", "value": "NG" },
+      "max_alert_rate": 5000
+    },
+    {
+      "id": "R010",
+      "name": "Same condition as R002, written in another order",
+      "owner": "Payments risk team",
+      "action": "hold",
+      "when": {
+        "all": [
+          { "field": "country", "op": "in", "value": ["NG", "RU"] },
+          { "field": "channel", "op": "eq", "value": "web" }
+        ]
+      }
+    },
+    {
+      "name": "No id and no condition",
+      "owner": "Fraud operations",
+      "action": "flag"
+    }
+  ]
+}

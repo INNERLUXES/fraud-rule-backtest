@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="fraud-rule-backtest" tests="30" failures="0" errors="0" time="0">
+  <testsuite name="fraud-rules" tests="30" failures="0" errors="0" skipped="3" time="0">
+    <testcase classname="fraud-rules" name="FRB001 file-unreadable" time="0"/>
+    <testcase classname="fraud-rules" name="FRB002 field-invalid" time="0"/>
+    <testcase classname="fraud-rules" name="FRB003 field-unknown" time="0"/>
+    <testcase classname="fraud-rules" name="FRB004 rule-duplicate-id" time="0"/>
+    <testcase classname="fraud-rules" name="FRB005 rule-no-owner" time="0"/>
+    <testcase classname="fraud-rules" name="FRB006 rule-no-action" time="0"/>
+    <testcase classname="fraud-rules" name="FRB007 range-reversed" time="0"/>
+    <testcase classname="fraud-rules" name="FRB008 field-not-in-data" time="0"/>
+    <testcase classname="fraud-rules" name="FRB009 operator-type-mismatch" time="0"/>
+    <testcase classname="fraud-rules" name="FRB010 duplicate-condition" time="0"/>
+    <testcase classname="fraud-rules" name="FRB011 block-no-precision-floor" time="0"/>
+    <testcase classname="fraud-rules" name="FRB012 label-column-missing" time="0"/>
+    <testcase classname="fraud-rules" name="FRB013 label-single-valued" time="0"/>
+    <testcase classname="fraud-rules" name="FRB014 label-unrecognised" time="0"/>
+    <testcase classname="fraud-rules" name="FRB015 amount-invalid" time="0"/>
+    <testcase classname="fraud-rules" name="FRB016 currency-mixed" time="0"/>
+    <testcase classname="fraud-rules" name="FRB017 transaction-id-duplicate" time="0"/>
+    <testcase classname="fraud-rules" name="FRB018 timestamp-unreadable" time="0"/>
+    <testcase classname="fraud-rules" name="FRB019 timestamp-in-future" time="0">
+      <skipped message="no --as-of time was given"/>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB020 too-few-fraud-cases" time="0"/>
+    <testcase classname="fraud-rules" name="FRB021 rule-never-fires" time="0"/>
+    <testcase classname="fraud-rules" name="FRB022 rule-catches-no-fraud" time="0"/>
+    <testcase classname="fraud-rules" name="FRB023 alert-rate-over-limit" time="0"/>
+    <testcase classname="fraud-rules" name="FRB024 precision-under-floor" time="0"/>
+    <testcase classname="fraud-rules" name="FRB025 rule-redundant" time="0"/>
+    <testcase classname="fraud-rules" name="FRB026 block-low-precision" time="0"/>
+    <testcase classname="fraud-rules" name="FRB027 hold-queue-over-limit" time="0"/>
+    <testcase classname="fraud-rules" name="FRB028 rule-low-evidence" time="0"/>
+    <testcase classname="fraud-rules" name="FRB029 candidate-loses-fraud" time="0">
+      <skipped message="only the compare command runs it"/>
+    </testcase>
+    <testcase classname="fraud-rules" name="FRB030 candidate-adds-false-alarms" time="0">
+      <skipped message="only the compare command runs it"/>
+    </testcase>
+  </testsuite>
+</testsuites>

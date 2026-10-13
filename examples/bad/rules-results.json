@@ -1,0 +1,71 @@
+{
+  "name": "Rule set that behaves badly on the data (made up)",
+  "currency_note": "All amounts are in one currency, EUR.",
+  "limits": { "max_hold_per_thousand": 10, "min_true_positives": 5 },
+  "rules": [
+    {
+      "id": "B001",
+      "name": "Payments at a kiosk",
+      "owner": "Fraud operations",
+      "action": "flag",
+      "when": { "field": "channel", "op": "eq", "value": "kiosk" }
+    },
+    {
+      "id": "B002",
+      "name": "Food at a shop till",
+      "owner": "Fraud operations",
+      "action": "flag",
+      "when": {
+        "all": [
+          { "field": "merchant_category", "op": "eq", "value": "food" },
+          { "field": "channel", "op": "eq", "value": "pos" }
+        ]
+      }
+    },
+    {
+      "id": "B003",
+      "name": "Every web payment",
+      "owner": "Fraud operations",
+      "action": "hold",
+      "when": { "field": "channel", "op": "eq", "value": "web" },
+      "max_alert_rate": 100,
+      "min_precision": 0.5
+    },
+    {
+      "id": "B004",
+      "name": "Very high amount",
+      "owner": "Fraud operations",
+      "action": "block",
+      "when": { "field": "amount", "op": "gte", "value": 900 },
+      "min_precision": 0.9
+    },
+    {
+      "id": "B005",
+      "name": "Higher amount, flagged again",
+      "owner": "Fraud operations",
+      "action": "flag",
+      "when": { "field": "amount", "op": "gte", "value": 1000 }
+    },
+    {
+      "id": "B006",
+      "name": "Every electronics order",
+      "owner": "Fraud operations",
+      "action": "block",
+      "when": { "field": "merchant_category", "op": "eq", "value": "electronics" },
+      "min_precision": 0.2
+    },
+    {
+      "id": "B007",
+      "name": "Web payment, small amount, watched country",
+      "owner": "Fraud operations",
+      "action": "hold",
+      "when": {
+        "all": [
+          { "field": "channel", "op": "eq", "value": "web" },
+          { "field": "country", "op": "in", "value": ["NG", "RU"] },
+          { "field": "amount", "op": "between", "value": [80, 99] }
+        ]
+      }
+    }
+  ]
+}
